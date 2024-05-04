@@ -6,6 +6,9 @@ services:
     volumes:
       - postgres_catalog:/var/lib/postgresql/data
 
+  basketdb:
+    image: postgres
+
   catalog.api:
     build:
       context: ./Services/Catalog/Catalog.API
@@ -17,3 +20,4 @@ services:
 
 volumes:
   postgres_catalog:
+  postgres_basket:
