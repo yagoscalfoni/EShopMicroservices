@@ -9,6 +9,9 @@ services:
   basketdb:
     image: postgres
 
+  distributedcache:
+    image: redis
+
   catalog.api:
     build:
       context: ./Services/Catalog/Catalog.API
@@ -18,6 +21,13 @@ services:
       - "6060:8081"
 
 
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
