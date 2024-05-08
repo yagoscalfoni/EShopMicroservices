@@ -30,6 +30,9 @@ services:
     restart: always
     ports:
       - "6379:6379"
+  
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
 
   catalog.api:
     environment:
