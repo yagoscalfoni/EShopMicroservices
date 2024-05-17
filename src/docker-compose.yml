@@ -21,6 +21,9 @@ services:
     ports:
       - "1433:1433"
 
+  messagebroker:
+    image: rabbitmq:management
+
   catalog.api:
     build:
       context: ./Services/Catalog/Catalog.API
