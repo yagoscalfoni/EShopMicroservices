@@ -1,22 +1,22 @@
 ﻿using Marten.Schema;
 
-namespace Catalog.API.Data
+namespace Catalog.API.Data;
+
+public class CatalogInitialData : IInitialData
 {
-    public class CatalogInitialData : IInitialData
+    public async Task Populate(IDocumentStore store, CancellationToken cancellation)
     {
-        public async Task Populate(IDocumentStore store, CancellationToken cancellation)
-        {
-            using var session = store.LightweightSession();
+        using var session = store.LightweightSession();
 
-            if (await session.Query<Product>().AnyAsync())
-                return;
+        if (await session.Query<Product>().AnyAsync())
+            return;
 
-            // Marten UPSERT will cater for existing record
-            session.Store<Product>(GetPreconfiguredProducts());
-            await session.SaveChangesAsync();
-        }
+        // Marten UPSERT will cater for existing records
+        session.Store<Product>(GetPreconfiguredProducts());
+        await session.SaveChangesAsync();
+    }
 
-        private static IEnumerable<Product> GetPreconfiguredProducts() => new List<Product>()
+    private static IEnumerable<Product> GetPreconfiguredProducts() => new List<Product>()
             {
                 new Product()
                 {
@@ -82,5 +82,5 @@ namespace Catalog.API.Data
                     Category = new List<string> { "Camera" }
                 }
             };
-    }
+
 }

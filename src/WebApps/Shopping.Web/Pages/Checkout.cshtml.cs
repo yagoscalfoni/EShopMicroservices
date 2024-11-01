@@ -5,7 +5,7 @@ namespace Shopping.Web.Pages
         : PageModel
     {
         [BindProperty]
-        public BasketCheckoutModel Order { get; set; } = default!;
+        public BasketCheckoutModel Order { get; set; } = default!;        
         public ShoppingCartModel Cart { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()

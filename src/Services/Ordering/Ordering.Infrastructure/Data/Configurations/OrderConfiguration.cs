@@ -28,9 +28,9 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             o => o.OrderName, nameBuilder =>
             {
                 nameBuilder.Property(n => n.Value)
-                           .HasColumnName(nameof(Order.OrderName))
-                           .HasMaxLength(100)
-                .IsRequired();
+                    .HasColumnName(nameof(Order.OrderName))
+                    .HasMaxLength(100)
+                    .IsRequired();
             });
 
         builder.ComplexProperty(

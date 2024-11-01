@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using Shopping.Web.Models.Ordering;
-
 namespace Shopping.Web.Pages
 {
     public class OrderListModel

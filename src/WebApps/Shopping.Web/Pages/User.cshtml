@@ -1,0 +1,44 @@
+﻿@page
+@model Shopping.Web.Pages.UserModel
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>User Profile</h2>
+            <p>Manage your account settings and information.</p>
+            <div class="list-group">
+                <a asp-page="OrderHistory" class="list-group-item list-group-item-action">
+                    <i class="fa fa-history"></i> Últimos Pedidos
+                </a>
+                <a asp-page="EditPersonalInfo" class="list-group-item list-group-item-action">
+                    <i class="fa fa-user"></i> Alterar Dados Pessoais
+                </a>
+                <a asp-page="ChangeEmail" class="list-group-item list-group-item-action">
+                    <i class="fa fa-envelope"></i> Alterar E-mail
+                </a>
+                <a asp-page="ChangePassword" class="list-group-item list-group-item-action">
+                    <i class="fa fa-key"></i> Trocar Senha
+                </a>
+                <a asp-page="PaymentMethods" class="list-group-item list-group-item-action">
+                    <i class="fa fa-credit-card"></i> Pagamento
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ApiGateways/YarpApiGateway/YarpApiGateway.csproj", "ApiGateways/YarpApiGateway/"]
-RUN dotnet restore "./ApiGateways/YarpApiGateway/YarpApiGateway.csproj"
+RUN dotnet restore "./ApiGateways/YarpApiGateway/./YarpApiGateway.csproj"
 COPY . .
 WORKDIR "/src/ApiGateways/YarpApiGateway"
 RUN dotnet build "./YarpApiGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build

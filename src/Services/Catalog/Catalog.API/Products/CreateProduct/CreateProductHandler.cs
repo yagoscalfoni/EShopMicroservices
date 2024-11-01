@@ -23,8 +23,7 @@ internal class CreateProductCommandHandler
     {
         //create Product entity from command object
         //save to database
-        //return CreateProductResult result
-        //
+        //return CreateProductResult result               
 
         var product = new Product
         {
@@ -34,7 +33,7 @@ internal class CreateProductCommandHandler
             ImageFile = command.ImageFile,
             Price = command.Price
         };
-
+        
         //save to database
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);

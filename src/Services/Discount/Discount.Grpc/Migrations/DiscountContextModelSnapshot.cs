@@ -14,7 +14,7 @@ namespace Discount.Grpc.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
             modelBuilder.Entity("Discount.Grpc.Models.Coupon", b =>
                 {
@@ -41,16 +41,16 @@ namespace Discount.Grpc.Migrations
                         new
                         {
                             Id = 1,
-                            Amount = 400,
-                            Description = "Best Phone available in market!",
+                            Amount = 150,
+                            Description = "IPhone Discount",
                             ProductName = "IPhone X"
                         },
                         new
                         {
                             Id = 2,
-                            Amount = 400,
-                            Description = "Second Best phone available in market",
-                            ProductName = "Samsung Galaxy A30"
+                            Amount = 100,
+                            Description = "Samsung Discount",
+                            ProductName = "Samsung 10"
                         });
                 });
 #pragma warning restore 612, 618

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Ordering.Infrastructure.Data.Extensions;
 public static class DatabaseExtentions
@@ -13,7 +14,7 @@ public static class DatabaseExtentions
 
         await SeedAsync(context);
     }
-
+    
     private static async Task SeedAsync(ApplicationDbContext context)
     {
         await SeedCustomerAsync(context);
