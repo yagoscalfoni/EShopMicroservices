@@ -1,0 +1,55 @@
+﻿@page
+@model UserDetailsModel
+@{
+    ViewData["Title"] = "User Details";
+}
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>Editar Dados Pessoais</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label">Nome</label>
+                    <input asp-for="User.FirstName" class="form-control" id="FirstName" />
+                </div>
+                <div class="mb-3">
+                    <label for="LastName" class="form-label">Sobrenome</label>
+                    <input asp-for="User.LastName" class="form-control" id="LastName" />
+                </div>
+                <div class="mb-3">
+                    <label for="Email" class="form-label">E-mail</label>
+                    <input asp-for="User.Email" class="form-control" id="Email" />
+                </div>
+                <div class="mb-3">
+                    <label for="PhoneNumber" class="form-label">Telefone</label>
+                    <input asp-for="User.PhoneNumber" class="form-control" id="PhoneNumber" />
+                </div>
+                <div class="mb-3">
+                    <label for="DateOfBirth" class="form-label">Data de Nascimento</label>
+                    <input asp-for="User.DateOfBirth" type="date" class="form-control" id="DateOfBirth" />
+                </div>
+                <div class="mb-3">
+                    <label for="StreetAddress" class="form-label">Endereço</label>
+                    <input asp-for="User.StreetAddress" class="form-control" id="StreetAddress" />
+                </div>
+                <div class="mb-3">
+                    <label for="City" class="form-label">Cidade</label>
+                    <input asp-for="User.City" class="form-control" id="City" />
+                </div>
+                <div class="mb-3">
+                    <label for="PostalCode" class="form-label">CEP</label>
+                    <input asp-for="User.PostalCode" class="form-control" id="PostalCode" />
+                </div>
+                <div class="mb-3">
+                    <label for="Country" class="form-label">País</label>
+                    <input asp-for="User.Country" class="form-control" id="Country" />
+                </div>
+                <div class="mb-3 form-check">
+                    <input asp-for="User.ReceivePromotions" class="form-check-input" type="checkbox" id="ReceivePromotions" />
+                    <label class="form-check-label" for="ReceivePromotions">Desejo receber promoções e novidades</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+</div>

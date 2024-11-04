@@ -25,6 +25,15 @@ services:
     volumes:
       - postgres_basket:/var/lib/postgresql/data/ 
 
+  userdb:
+    container_name: userdb
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=SwN12345678
+    restart: always
+    ports:
+      - "1435:1434"
+
   distributedcache:
     container_name: distributedcache
     restart: always
@@ -122,6 +131,25 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
+  user.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=userdb;Database=UserDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
+    depends_on:
+      - userdb
+      - messagebroker
+    ports:
+      - "6006:8080"
+      - "6066:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
   yarpapigateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -131,6 +159,7 @@ services:
       - catalog.api
       - basket.api
       - ordering.api
+      - user.api
     ports:
       - "6004:8080"
       - "6064:8081"
@@ -152,3 +181,7 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+volumes:
+  postgres_catalog:
+  postgres_basket:

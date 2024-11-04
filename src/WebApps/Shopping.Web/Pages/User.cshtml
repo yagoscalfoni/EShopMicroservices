@@ -23,22 +23,19 @@
             <h2>User Profile</h2>
             <p>Manage your account settings and information.</p>
             <div class="list-group">
-                <a asp-page="OrderHistory" class="list-group-item list-group-item-action">
-                    <i class="fa fa-history"></i> Últimos Pedidos
-                </a>
-                <a asp-page="EditPersonalInfo" class="list-group-item list-group-item-action">
+                <a asp-page="UserDetails" class="list-group-item list-group-item-action">
                     <i class="fa fa-user"></i> Alterar Dados Pessoais
                 </a>
-                <a asp-page="ChangeEmail" class="list-group-item list-group-item-action">
-                    <i class="fa fa-envelope"></i> Alterar E-mail
-                </a>
-                <a asp-page="ChangePassword" class="list-group-item list-group-item-action">
-                    <i class="fa fa-key"></i> Trocar Senha
-                </a>
-                <a asp-page="PaymentMethods" class="list-group-item list-group-item-action">
-                    <i class="fa fa-credit-card"></i> Pagamento
+                <a asp-page="UserPayments" class="list-group-item list-group-item-action">
+                    <i class="fa fa-credit-card"></i> Payments
                 </a>
             </div>
+            <hr />
+            <form method="post" asp-page-handler="Logout">
+                <button type="submit" class="btn btn-danger mt-3">
+                    <i class="fa fa-sign-out"></i> Logout
+                </button>
+            </form>
         </div>
     </div>
 </div>

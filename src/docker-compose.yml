@@ -7,6 +7,9 @@ services:
   basketdb:
     image: postgres
 
+  userdb:
+    image: mcr.microsoft.com/mssql/server
+
   distributedcache:
     image: redis
 
@@ -40,6 +43,12 @@ services:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
+  user.api:
+    image: ${DOCKER_REGISTRY-}userapi
+    build:
+      context: .
+      dockerfile: Services/User/User.API/Dockerfile
+
   yarpapigateway:
     image: ${DOCKER_REGISTRY-}yarpapigateway
     build:
@@ -55,9 +64,3 @@ services:
 volumes:
   postgres_catalog:
   postgres_basket:
-
-
-
-
-
-

@@ -56,8 +56,17 @@
                             <span class="badge badge-light">3</span>
                         </a>
 
-                        <a class="btn btn-primary btn-sm ml-2" asp-area="" asp-page="/User">
-                            <i class="fa fa-user"></i> Profile
+                        <a class="btn btn-primary btn-sm ml-2" asp-area=""
+                           asp-page="@(ViewData["IsLoggedIn"] as bool? == true ? "/User" : "/Login")">
+                            <i class="fa fa-user"></i>
+                            @if (ViewData["IsLoggedIn"] as bool? == true)
+                            {
+                                <span>Hello, @ViewData["UserName"]!</span>
+                            }
+                            else
+                            {
+                                <span>Login</span>
+                            }
                         </a>
                     </form>
 

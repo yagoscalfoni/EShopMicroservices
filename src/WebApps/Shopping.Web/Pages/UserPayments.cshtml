@@ -1,0 +1,40 @@
+﻿@page
+@model UserPaymentsModel
+@{
+    ViewData["Title"] = "User Payments";
+}
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <h2>Payment Methods</h2>
+            <p>Manage your saved payment methods.</p>
+
+            <div class="list-group">
+                @if (Model.User.PaymentMethods.Any())
+                {
+                    @foreach (var payment in Model.User.PaymentMethods)
+                    {
+                        <div class="list-group-item">
+                            <h5 class="mb-1">@payment.CardType ending in @payment.LastFourDigits</h5>
+                            <p class="mb-1">Expires on: @payment.ExpirationDate.ToString("MM/yyyy")</p>
+                            <p class="mb-1">Billing Address: @payment.BillingAddress</p>
+                            <div class="mt-2">
+                                <a asp-page="EditPayment" asp-route-id="@payment.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-page="DeletePayment" asp-route-id="@payment.Id" class="btn btn-sm btn-outline-danger">Remove</a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No payment methods saved yet.</p>
+                }
+            </div>
+
+            <div class="mt-4">
+                <a asp-page="AddPayment" class="btn btn-primary">Add New Payment Method</a>
+            </div>
+        </div>
+    </div>
+</div>
