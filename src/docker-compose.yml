@@ -1,8 +1,34 @@
 version: '3.4'
 
 services:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"  # UI do Jaeger
+      - "6831:6831/udp"  # Porta do Jaeger para o OpenTelemetry
+      - "4317:4317"  # Porta do OTLP gRPC para o Jaeger
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"  # UI do Prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"  # Porta do Grafana
+    depends_on:
+      - prometheus
+      - jaeger
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
   catalogdb:
     image: postgres
+
 
   basketdb:
     image: postgres

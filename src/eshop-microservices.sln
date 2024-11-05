@@ -51,13 +51,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services.Tests", "Services.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{8915FFF6-31A7-4008-B98B-A89D996E95A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.API", "Services\User\User.API\User.API.csproj", "{7613B716-96C3-488F-B01D-538E7C0B2708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User.API", "Services\User\User.API\User.API.csproj", "{7613B716-96C3-488F-B01D-538E7C0B2708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Application", "Services\User\User.Application\User.Application\User.Application.csproj", "{7D82637B-C48D-425F-B629-2CE0EF2F7122}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User.Application", "Services\User\User.Application\User.Application\User.Application.csproj", "{7D82637B-C48D-425F-B629-2CE0EF2F7122}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Domain", "Services\User\User.Domain\User.Domain\User.Domain.csproj", "{D4A49E33-F676-48F1-9CCC-E3185C3449B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User.Domain", "Services\User\User.Domain\User.Domain\User.Domain.csproj", "{D4A49E33-F676-48F1-9CCC-E3185C3449B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Infrastructure", "Services\User\User.Infrastructure\User.Infrastructure\User.Infrastructure.csproj", "{809C3B23-B89E-493E-AA32-A59BA8C97B99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User.Infrastructure", "Services\User\User.Infrastructure\User.Infrastructure\User.Infrastructure.csproj", "{809C3B23-B89E-493E-AA32-A59BA8C97B99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{9BF7D2A5-49EA-4307-86E1-C45C3DC99D99}"
+	ProjectSection(SolutionItems) = preProject
+		prometheus.yml = prometheus.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

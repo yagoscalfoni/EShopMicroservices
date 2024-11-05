@@ -9,10 +9,10 @@ services:
       - POSTGRES_DB=CatalogDb
     restart: always
     ports:
-        - "5432:5432"
+      - "5432:5432"
     volumes:
       - postgres_catalog:/var/lib/postgresql/data/ 
-      
+
   basketdb:
     container_name: basketdb
     environment:
@@ -21,9 +21,33 @@ services:
       - POSTGRES_DB=BasketDb
     restart: always
     ports:
-        - "5433:5432"
+      - "5433:5432"
     volumes:
-      - postgres_basket:/var/lib/postgresql/data/ 
+      - postgres_basket:/var/lib/postgresql/data/
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"  # UI do Jaeger
+      - "6831:6831/udp"  # Porta de coleta do Jaeger
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
 
   userdb:
     container_name: userdb
@@ -143,6 +167,8 @@ services:
     depends_on:
       - userdb
       - messagebroker
+      - jaeger
+      - prometheus
     ports:
       - "6006:8080"
       - "6066:8081"
