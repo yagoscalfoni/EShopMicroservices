@@ -1,49 +1,70 @@
-# EShopMicroservices
+# 🛒 EShopMicroservices
 
-Desenvolvimento de vários microsserviços que implementam módulos de e-commerce para Catálogo, Carrinho de Compras, Desconto e Pedidos, utilizando bancos de dados NoSQL (DocumentDb, Redis) e Relacionais (PostgreSQL, Sql Server), comunicando-se através de RabbitMQ com comunicação orientada a eventos.
+A fully modular, cloud-native **e-commerce backend** application built with **.NET 8**, implementing real-world microservices architecture using best practices such as **DDD**, **CQRS**, **Clean Architecture**, **JWT Authentication**, and asynchronous messaging with **RabbitMQ**.
 
-Catálogo (Catalog)
+---
 
-Implementação da Arquitetura Vertical Slice com pastas de recursos e um único arquivo .cs que inclui diferentes classes.
-Implementação de CQRS usando a biblioteca MediatR.
-Validação de Pipeline de CQRS com MediatR e FluentValidation.
-Uso da biblioteca Marten para Document DB Transacional no PostgreSQL.
-Definição de endpoints de API Minimal com Carter.
-Preocupações transversais como Logging, Tratamento Global de Exceções e Verificações de Saúde.
+## 📌 Overview
 
-Carrinho de Compras (Basket)
+This project is a result of my learning and hands-on implementation of modern software design principles and cloud-native development using .NET 8.  
+It provides a solid foundation for any enterprise-level distributed system with scalable, testable, and maintainable services.
 
-Aplicativo Web API seguindo os princípios REST API para operações CRUD.
-Uso do Redis como Cache Distribuído para o banco de dados da cesta (basketdb).
-Implementação dos padrões Proxy, Decorator e Cache-aside.
-Consumo do serviço Grpc de Desconto para comunicação síncrona inter-serviços e cálculo do preço final do produto.
-Publicação da fila BasketCheckout usando MassTransit e RabbitMQ.
+---
 
-Desconto (Discount)
+## 🧱 Architecture & Design
 
-Aplicativo Servidor Grpc.
-Construção de comunicação Grpc inter-serviços de alto desempenho com o microsserviço de Cesta.
-Exposição de serviços Grpc com criação de mensagens Protobuf.
-Uso do Entity Framework Core ORM com provedor de dados SQLite e migrações para simplificar o acesso aos dados e garantir alto desempenho.
-Conexão com banco de dados SQLite e conteinerização.
-Comunicação entre Microsserviços
-Comunicação síncrona inter-serviços com Grpc.
-Comunicação assíncrona entre microsserviços com RabbitMQ como broker de mensagens.
-Uso do modelo de troca de tópicos Publish/Subscribe do RabbitMQ.
-Uso de MassTransit para abstração sobre o sistema de broker de mensagens RabbitMQ.
-Publicação do evento BasketCheckout na fila a partir do microsserviço de Cesta e assinatura deste evento no microsserviço de Pedidos.
-Criação da biblioteca RabbitMQ EventBus.Messages e adição de referências nos microsserviços.
+- ✅ **Domain-Driven Design (DDD)**
+- ✅ **CQRS** – Command Query Responsibility Segregation
+- ✅ **Vertical Slice Architecture** with feature folders
+- ✅ **Clean Architecture** with separation of concerns
+- ✅ **Microservices-based Architecture** (Catalog, Basket, Ordering, Identity, etc.)
+- ✅ **JWT-based Authentication** via Identity microservice
+- ✅ **API Gateway** using YARP Reverse Proxy
+- ✅ **Sync Communication** with **gRPC**
+- ✅ **Async Communication** with **RabbitMQ + MassTransit**
+- ✅ **Docker & Docker Compose** for containerized orchestration
+- ✅ **Health Checks**, **OpenTelemetry**, and observability practices
 
-Pedidos (Ordering)
+---
 
-Implementação de DDD, CQRS e Arquitetura Limpa seguindo as melhores práticas.
-Desenvolvimento de CQRS usando os pacotes MediatR, FluentValidation e Mapster.
-Consumo do evento BasketCheckout na fila RabbitMQ usando a configuração MassTransit-RabbitMQ.
-Conexão e conteinerização do banco de dados SqlServer.
-Uso do Entity Framework Core ORM com migração automática para SqlServer na inicialização da aplicação.
+## 🔐 Authentication
 
-Docker Compose
-Estabelecimento de todos os microsserviços no Docker:
-Conteinerização de microsserviços.
-Conteinerização de bancos de dados.
-Sobrescrita de variáveis de ambiente.
+Authentication and user management are handled via the **Identity microservice**, which issues **JWT tokens** to secure access across all APIs.
+
+---
+
+## 📚 Technologies Used
+
+| Layer                      | Stack / Tools                                                                 |
+|---------------------------|-------------------------------------------------------------------------------|
+| **Framework**             | .NET 8, ASP.NET Core Minimal APIs, Razor Pages, C# 12                        |
+| **API Gateway**           | YARP (Yet Another Reverse Proxy)                                             |
+| **Messaging**             | RabbitMQ + MassTransit                                                       |
+| **Sync Communication**    | gRPC                                                                         |
+| **Databases**             | PostgreSQL, Redis, SQLite, SQL Server, Marten (Document DB on PostgreSQL)    |
+| **Libraries**             | MediatR, Mapster, Carter, Refit, FluentValidation, EF Core                   |
+| **Auth**                  | JWT, Identity Service                                                        |
+| **Containerization**      | Docker, Docker Compose                                                       |
+| **Monitoring**            | Health Checks, Logging, OpenTelemetry                                        |
+
+---
+
+## 📂 Microservices
+
+- **Catalog.API** – Product management using CQRS and Marten
+- **Basket.API** – Shopping cart with Redis caching
+- **Ordering.API** – Order processing with DDD and gRPC
+- **Discount.Grpc** – Microservice for applying discounts
+- **Identity.API** – Handles authentication and JWT token issuing
+- **Gateway** – YARP-based API gateway routing traffic
+
+---
+
+## ▶️ Running the Project
+
+> Prerequisites: [.NET 8 SDK](https://dotnet.microsoft.com/download), [Docker](https://www.docker.com/), [Postman](https://www.postman.com/)
+
+```bash
+git clone https://github.com/yagoscalfoni/EShopMicroservices.git
+cd EShopMicroservices
+docker-compose up --build
