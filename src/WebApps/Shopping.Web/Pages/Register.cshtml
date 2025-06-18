@@ -1,0 +1,36 @@
+@page
+@model Shopping.Web.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Register</h2>
+            <hr />
+            <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+
+            <form method="post">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="RegisterData.FirstName" required />
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="RegisterData.LastName" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="RegisterData.Email" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="RegisterData.Password" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+            <partial name="_ValidationScriptsPartial" />
+        </div>
+    </div>
+</div>
