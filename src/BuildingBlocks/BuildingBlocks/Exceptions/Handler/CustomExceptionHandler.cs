@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ordering.Domain.Exceptions;
+using User.Domain.Exceptions;
 
 namespace BuildingBlocks.Exceptions.Handler;
 public class CustomExceptionHandler
@@ -24,6 +26,18 @@ public class CustomExceptionHandler
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError
             ),
             ValidationException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                context.Response.StatusCode = StatusCodes.Status400BadRequest
+            ),
+            User.Domain.Exceptions.DomainException =>
+            (
+                exception.Message,
+                exception.GetType().Name,
+                context.Response.StatusCode = StatusCodes.Status400BadRequest
+            ),
+            Ordering.Domain.Exceptions.DomainException =>
             (
                 exception.Message,
                 exception.GetType().Name,

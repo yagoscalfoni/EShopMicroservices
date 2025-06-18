@@ -56,7 +56,12 @@ Authentication and user management are handled via the **Identity microservice**
 - **Ordering.API** – Order processing with DDD and gRPC
 - **Discount.Grpc** – Microservice for applying discounts
 - **Identity.API** – Handles authentication and JWT token issuing
+- **User.API** – Basic user registration and login endpoints
 - **Gateway** – YARP-based API gateway routing traffic
+
+### User API
+
+`POST /user-service/register` – create a new user account
 
 ---
 
@@ -68,3 +73,4 @@ Authentication and user management are handled via the **Identity microservice**
 git clone https://github.com/yagoscalfoni/EShopMicroservices.git
 cd EShopMicroservices
 docker-compose up --build
+```
