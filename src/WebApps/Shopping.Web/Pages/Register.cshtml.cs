@@ -33,7 +33,7 @@ public class RegisterModel : PageModel
             {
                 try
                 {
-                    var problem = await apiEx.Content.ReadFromJsonAsync<ProblemDetails>();
+                    var problem = JsonSerializer.Deserialize<ProblemDetails>(apiEx.Content);
                     if (problem?.Extensions != null &&
                         problem.Extensions.TryGetValue("ValidationErrors", out var errorsObj) &&
                         errorsObj is JsonElement element &&

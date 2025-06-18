@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Shopping.Web.Services.Handlers;
 using System.Text;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,15 +12,20 @@ builder.Services.AddHttpContextAccessor();
 // Registrar o AuthTokenHandler
 builder.Services.AddTransient<AuthTokenHandler>();
 
-// Configura sessões para armazenar estado de autenticação
+// Configura sessÃµes para armazenar estado de autenticaÃ§Ã£o
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.IdleTimeout = TimeSpan.FromHours(1); // Tempo de vida da sessão
+    options.IdleTimeout = TimeSpan.FromHours(1); // Tempo de vida da sessÃ£o
 });
+
+// Persist antiforgery keys to keep cookies valid after restarts
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "keys")))
+    .SetApplicationName("Shopping.Web");
 
 // Adiciona Razor Pages e o filtro global
 builder.Services.AddRazorPages(options =>
@@ -27,7 +33,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.ConfigureFilter(new AuthenticationPageFilter());
 });
 
-// Configuração para autenticação baseada em JWT, mas usada principalmente para verificação de token, não para o frontend direto
+// ConfiguraÃ§Ã£o para autenticaÃ§Ã£o baseada em JWT, mas usada principalmente para verificaÃ§Ã£o de token, nÃ£o para o frontend direto
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,7 +53,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Adiciona Refit para comunicar com as APIs, usando o AuthTokenHandler para adicionar o token nas requisições
+// Adiciona Refit para comunicar com as APIs, usando o AuthTokenHandler para adicionar o token nas requisiÃ§Ãµes
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(c =>
     {
@@ -84,7 +90,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Middleware de Sessão para manter o estado de autenticação
+// Middleware de SessÃ£o para manter o estado de autenticaÃ§Ã£o
 app.UseSession();
 
 app.UseAuthentication();
