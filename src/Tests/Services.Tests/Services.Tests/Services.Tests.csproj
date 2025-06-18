@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../../Services/User/User.Application/User.Application/User.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Basket\" />
     <Folder Include="Catalog\" />
     <Folder Include="Discount\" />
