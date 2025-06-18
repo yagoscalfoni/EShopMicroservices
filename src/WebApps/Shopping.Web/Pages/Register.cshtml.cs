@@ -1,6 +1,5 @@
 using System.Net;
 using System.Text.Json;
-
 namespace Shopping.Web.Pages;
 
 public class RegisterModel : PageModel
