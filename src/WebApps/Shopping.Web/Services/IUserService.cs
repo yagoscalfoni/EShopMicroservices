@@ -7,10 +7,15 @@
 
         [Post("/user-service/register")]
         Task<RegisterUserResponse> RegisterUser([Body] RegisterUserRequest request);
+
+        [Post("/user-service/recover-password")]
+        Task<RecoverPasswordResponse> RecoverPassword([Body] RecoverPasswordRequest request);
     }
 
     public record AuthenticateUserRequest(string Email, string Password);
     public record AuthenticateUserResponse(string Token, string Name);
     public record RegisterUserRequest(string FirstName, string LastName, string Email, string Password);
     public record RegisterUserResponse(Guid Id, string Email);
+    public record RecoverPasswordRequest(string Email);
+    public record RecoverPasswordResponse(string Message);
 }
