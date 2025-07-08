@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Ordering.Domain.Exceptions;
 using User.Domain.Exceptions;
+using User.Domain.Models;
 
 namespace BuildingBlocks.Exceptions.Handler;
 public class CustomExceptionHandler

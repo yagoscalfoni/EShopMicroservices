@@ -22,7 +22,7 @@ public class RegisterModel : PageModel
 
         try
         {
-            var request = new RegisterUserRequest(RegisterData.FirstName, RegisterData.LastName, RegisterData.Email, RegisterData.Password);
+            var request = new Services.RegisterUserRequest(RegisterData.FirstName, RegisterData.LastName, RegisterData.Email, RegisterData.Password);
             await _userService.RegisterUser(request);
             return RedirectToPage("/Login");
         }
@@ -33,7 +33,7 @@ public class RegisterModel : PageModel
             {
                 try
                 {
-                    var problem = JsonSerializer.Deserialize<ProblemDetails>(apiEx.Content);
+                    var problem = JsonSerializer.Deserialize<Microsoft.AspNetCore.Mvc.ProblemDetails>(apiEx.Content);
                     if (problem?.Extensions != null &&
                         problem.Extensions.TryGetValue("ValidationErrors", out var errorsObj) &&
                         errorsObj is JsonElement element &&

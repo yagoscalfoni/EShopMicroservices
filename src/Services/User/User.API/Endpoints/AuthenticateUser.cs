@@ -14,7 +14,7 @@ public record AuthenticateUserRequest(string Email, string Password);
 /// </summary>
 /// <param name="Token">Token JWT gerado.</param>
 /// <param name="ExpiresAt">Data de expiração do token.</param>
-public record AuthenticateUserResponse(string Token, DateTime ExpiresAt, string Name);
+public record AuthenticateUserResponse(string Token, DateTime ExpiresAt, string Name, Guid UserId);
 
 public class AuthenticateUser : ICarterModule
 {
@@ -30,7 +30,7 @@ public class AuthenticateUser : ICarterModule
                 return Results.Unauthorized();
             }
 
-            var response = new AuthenticateUserResponse(result.Token, result.ExpiresAt, result.Name);
+            var response = new AuthenticateUserResponse(result.Token, result.ExpiresAt, result.Name, result.UserId);
 
             return Results.Ok(response);
         })

@@ -1,5 +1,9 @@
 version: '3.4'
 
+networks:
+  monitoring_network:
+    driver: bridge
+
 services:
   catalogdb:
     container_name: catalogdb
@@ -24,19 +28,36 @@ services:
       - "5433:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql/data/
+    networks:
+      - monitoring_network
 
   jaeger:
     container_name: jaeger
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.58
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+      - METRICS_EXPORTER=prometheus
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://prometheus:9090
+      - PROMETHEUS_QUERY_NAMESPACE=${PROMETHEUS_QUERY_NAMESPACE:-}
+      - PROMETHEUS_QUERY_DURATION_UNIT=${PROMETHEUS_QUERY_DURATION_UNIT:-}
+      - PROMETHEUS_QUERY_NORMALIZE_CALLS=true
+      - PROMETHEUS_QUERY_NORMALIZE_DURATION=true
     ports:
       - "16686:16686"  # UI do Jaeger
       - "6831:6831/udp"  # Porta de coleta do Jaeger
+      - "4317:4317"  # Porta do OTLP gRPC para o Jaeger
+      - "8888:8888" 
+    networks:
+      - monitoring_network
 
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring_network
     ports:
       - "9090:9090"
 
@@ -48,6 +69,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     ports:
       - "3000:3000"
+    networks:
+      - monitoring_network
 
   userdb:
     container_name: userdb
@@ -57,12 +80,16 @@ services:
     restart: always
     ports:
       - "1435:1434"
+    networks:
+      - monitoring_network
 
   distributedcache:
     container_name: distributedcache
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - monitoring_network
 
   orderdb:
     container_name: orderdb
@@ -72,6 +99,8 @@ services:
     restart: always
     ports:
       - "1433:1433"
+    networks:
+      - monitoring_network
 
   messagebroker:
     container_name: messagebroker
@@ -83,6 +112,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - monitoring_network
 
   catalog.api:
     environment:
@@ -98,6 +129,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
   basket.api:
     environment:
@@ -121,6 +154,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
   discount.grpc:
     environment:
@@ -134,6 +169,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
   ordering.api:
     environment:
@@ -154,6 +191,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
   user.api:
     environment:
@@ -175,6 +214,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
   yarpapigateway:
     environment:
@@ -192,6 +233,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
   shopping.web:
     environment:
@@ -207,6 +250,8 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      - monitoring_network
 
 volumes:
   postgres_catalog:

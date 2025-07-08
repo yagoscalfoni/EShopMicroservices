@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shopping.Web.Services.Handlers;
 using System.Text;
 using System.IO;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 

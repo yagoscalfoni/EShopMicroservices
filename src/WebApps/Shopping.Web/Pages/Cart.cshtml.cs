@@ -7,6 +7,7 @@ namespace Shopping.Web.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
+            //HttpContext.Session.GetString()
             Cart = await basketService.LoadUserBasket();
 
             return Page();

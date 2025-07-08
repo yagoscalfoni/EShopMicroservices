@@ -27,7 +27,7 @@ namespace User.Application.Users.Commands.AuthenticateUser
             var token = GenerateJwtToken(user);
             var expiresAt = DateTime.UtcNow.AddHours(1);
 
-            return new AuthenticateUserResult(token, expiresAt, user.FirstName + " " + user.LastName);
+            return new AuthenticateUserResult(token, expiresAt, user.FirstName + " " + user.LastName, user.Id.Value);
         }
 
         private string GenerateJwtToken(User.Domain.Models.User user)
@@ -38,7 +38,8 @@ namespace User.Application.Users.Commands.AuthenticateUser
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.Value.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim("scope", "user.read user.purchase"),
-                new Claim("name", $"{user.FirstName} {user.LastName}")
+                new Claim("name", $"{user.FirstName} {user.LastName}"),
+                new Claim("userId", $"{user.Id.Value}")
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor

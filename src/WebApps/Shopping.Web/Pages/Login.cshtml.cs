@@ -29,6 +29,7 @@ namespace Shopping.Web.Pages
                     HttpContext.Session.SetString("IsAuthenticated", "true");
                     HttpContext.Session.SetString("AuthToken", response.Token);
                     HttpContext.Session.SetString("UserName", response.Name);
+                    HttpContext.Session.SetString("UserId", response.UserId.ToString());
 
                     return RedirectToPage("/Index");
                 }

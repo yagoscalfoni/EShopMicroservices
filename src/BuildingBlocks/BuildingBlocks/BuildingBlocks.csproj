@@ -14,14 +14,21 @@
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.9.0-beta.2" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
+	<PackageReference Include="OpenTelemetry.Extensions" Version="1.0.0-beta.4" />
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.4" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\Ordering\Ordering.Domain\Ordering.Domain.csproj" />
+    <ProjectReference Include="..\..\Services\User\User.Domain\User.Domain\User.Domain.csproj" />
   </ItemGroup>
 
 </Project>

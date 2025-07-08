@@ -10,7 +10,7 @@
     }
 
     public record AuthenticateUserRequest(string Email, string Password);
-    public record AuthenticateUserResponse(string Token, string Name);
+    public record AuthenticateUserResponse(string Token, string Name, Guid UserId);
     public record RegisterUserRequest(string FirstName, string LastName, string Email, string Password);
     public record RegisterUserResponse(Guid Id, string Email);
 }

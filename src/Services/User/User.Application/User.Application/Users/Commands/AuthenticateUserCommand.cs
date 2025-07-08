@@ -5,7 +5,7 @@ namespace User.Application.Users.Commands.AuthenticateUser
 {
     public record AuthenticateUserCommand(string Email, string Password) : ICommand<AuthenticateUserResult>;
 
-    public record AuthenticateUserResult(string Token, DateTime ExpiresAt, string Name);
+    public record AuthenticateUserResult(string Token, DateTime ExpiresAt, string Name, Guid UserId);
 
     public class AuthenticateUserCommandValidator : AbstractValidator<AuthenticateUserCommand>
     {
