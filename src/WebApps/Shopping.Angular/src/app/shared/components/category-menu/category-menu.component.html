@@ -1,0 +1,11 @@
+<div class="card bg-light mb-3">
+  <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>
+  <ul class="list-group category_block">
+    <li class="list-group-item" [class.active]="!selectedCategory">
+      <a href="javascript:void(0)" (click)="selectCategory.emit(null)">All</a>
+    </li>
+    <li class="list-group-item" *ngFor="let category of categories" [class.active]="category === selectedCategory">
+      <a href="javascript:void(0)" (click)="selectCategory.emit(category)">{{ category }}</a>
+    </li>
+  </ul>
+</div>
