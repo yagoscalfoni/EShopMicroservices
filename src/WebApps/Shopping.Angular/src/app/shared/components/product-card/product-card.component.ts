@@ -12,6 +12,7 @@ export class ProductCardComponent {
   @Output() addToCart = new EventEmitter<void>();
 
   get imageUrl(): string {
+    console.log(this.product);
     return productImageUrl(this.product?.imageFile, this.product?.name ?? 'Produto');
   }
 }

@@ -6,13 +6,15 @@ export const PRODUCT_PLACEHOLDER = (label = 'Produto') =>
 export function productImageUrl(imageFile?: string, label = 'Produto'): string {
   const candidate = imageFile?.trim();
 
+  console.log(candidate);
   if (!candidate) {
     return PRODUCT_PLACEHOLDER(label);
   }
 
+  // URL absoluta (Unsplash, CDN, etc)
   if (candidate.startsWith('http')) {
     return candidate;
   }
-
-  return `${environment.apiBaseUrl}/images/product/${candidate}`;
+  // 🔴 fallback seguro (caso venha algo inesperado)
+  return PRODUCT_PLACEHOLDER(label);
 }
