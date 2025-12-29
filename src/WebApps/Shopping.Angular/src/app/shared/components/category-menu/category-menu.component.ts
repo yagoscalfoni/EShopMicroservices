@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-category-menu',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './category-menu.component.html',
   styleUrls: ['./category-menu.component.scss']
 })
