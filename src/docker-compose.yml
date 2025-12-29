@@ -47,12 +47,12 @@ services:
       - monitoring_network
 
   catalogdb:
-    image: postgres
+    image: postgres:16
     networks:
       - monitoring_network
 
   basketdb:
-    image: postgres
+    image: postgres:16
     networks:
       - monitoring_network
 
