@@ -6,7 +6,6 @@ export const PRODUCT_PLACEHOLDER = (label = 'Produto') =>
 export function productImageUrl(imageFile?: string, label = 'Produto'): string {
   const candidate = imageFile?.trim();
 
-  console.log(candidate);
   if (!candidate) {
     return PRODUCT_PLACEHOLDER(label);
   }
