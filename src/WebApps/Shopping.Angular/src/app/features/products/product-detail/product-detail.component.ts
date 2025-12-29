@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Product } from '../../../core/models/product.model';
 import { BasketService } from '../../../core/services/basket.service';
 import { CatalogService } from '../../../core/services/catalog.service';
@@ -7,6 +9,8 @@ import { productImageUrl } from '../../../core/utils/image-url';
 
 @Component({
   selector: 'app-product-detail',
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })

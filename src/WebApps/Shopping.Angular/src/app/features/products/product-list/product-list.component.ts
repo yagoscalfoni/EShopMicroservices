@@ -1,11 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Product } from '../../../core/models/product.model';
 import { BasketService } from '../../../core/services/basket.service';
 import { CatalogService } from '../../../core/services/catalog.service';
 import { productImageUrl } from '../../../core/utils/image-url';
+import { CategoryMenuComponent } from '../../../shared/components/category-menu/category-menu.component';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 
 @Component({
   selector: 'app-product-list',
+  standalone: true,
+  imports: [CommonModule, RouterModule, CategoryMenuComponent, ProductCardComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
