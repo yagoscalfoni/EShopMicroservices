@@ -37,7 +37,11 @@
     <a routerLink="/products" class="btn btn-link">Ver catálogo</a>
   </div>
   <div class="row g-3">
-    <div class="col-12 col-md-6 col-lg-4" *ngFor="let product of featuredProducts">
+    <!-- Async pipe + trackBy aproveitam o fluxo reativo e evitam recriar cards sem necessidade -->
+    <div
+      class="col-12 col-md-6 col-lg-4"
+      *ngFor="let product of featuredProducts$ | async; trackBy: trackByProductId"
+    >
       <app-product-card [product]="product"></app-product-card>
     </div>
   </div>
