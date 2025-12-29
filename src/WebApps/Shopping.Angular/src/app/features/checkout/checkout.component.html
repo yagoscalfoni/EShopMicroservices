@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="checkoutForm">
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Shipping & Payment</div>
+        <div class="card-body">
+          <form [formGroup]="checkoutForm" (ngSubmit)="submit()" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">First name</label>
+                <input formControlName="firstName" type="text" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Last name</label>
+                <input formControlName="lastName" type="text" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input formControlName="emailAddress" type="email" class="form-control" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Address</label>
+                <input formControlName="addressLine" type="text" class="form-control" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Country</label>
+                <input formControlName="country" type="text" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">State</label>
+                <input formControlName="state" type="text" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Zip</label>
+                <input formControlName="zipCode" type="text" class="form-control" />
+              </div>
+            </div>
+
+            <h5 class="mt-4">Payment</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Name on card</label>
+                <input formControlName="cardName" type="text" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Card number</label>
+                <input formControlName="cardNumber" type="text" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Expiration</label>
+                <input formControlName="expiration" type="text" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">CVV</label>
+                <input formControlName="cvv" type="text" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" formControlName="paymentMethod">
+                  <option [value]="1">Credit Card</option>
+                  <option [value]="2">Paypal</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-danger btn-lg mt-4" type="submit" [disabled]="submitting">
+              Finalizar pedido
+            </button>
+          </form>
+          <div *ngIf="message" class="alert alert-info mt-3" role="alert">{{ message }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="card">
+        <div class="card-header bg-light">Resumo</div>
+        <div class="card-body">
+          <p class="mb-1">Revise seus dados e confirme o envio.</p>
+          <p class="text-muted mb-0">Itens e valores serão carregados do carrinho ativo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

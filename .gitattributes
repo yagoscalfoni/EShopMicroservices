@@ -1,0 +1,16 @@
+# Normalize text files to LF to avoid incompatible binary diffs
+* text=auto eol=lf
+
+# Treat common asset types as binary to avoid diff/merge issues during PR creation
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.webp binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
