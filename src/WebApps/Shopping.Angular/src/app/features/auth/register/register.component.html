@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center">Register</h2>
+      <hr />
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="form-group mb-3">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email" required />
+        </div>
+        <div class="form-group mb-3">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+        <div *ngIf="message" class="alert alert-info mt-3">{{ message }}</div>
+      </form>
+    </div>
+  </div>
+</div>

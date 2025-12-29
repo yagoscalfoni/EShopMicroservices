@@ -1,0 +1,13 @@
+.banner {
+  background: linear-gradient(135deg, #f5f7fb 0%, #e8f0ff 100%);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.illustration {
+  background: radial-gradient(circle at 20% 20%, rgba(13, 110, 253, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(25, 135, 84, 0.12), transparent 40%),
+    #ffffff;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}

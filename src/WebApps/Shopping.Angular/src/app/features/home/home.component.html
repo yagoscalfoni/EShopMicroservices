@@ -1,0 +1,44 @@
+<section class="banner container mt-4">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <h1 class="display-5 fw-bold">Encontre seus produtos favoritos</h1>
+      <p class="lead">Explore categorias, adicione ao carrinho e conclua seus pedidos com uma experiência renovada em Angular.</p>
+      <div class="d-flex gap-2">
+        <a class="btn btn-primary btn-lg" routerLink="/products">Ver produtos</a>
+        <a class="btn btn-outline-secondary btn-lg" routerLink="/cart">Ir para o carrinho</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="illustration p-4 rounded">
+        <div class="badge bg-light text-primary text-uppercase fw-semibold mb-3">Nova experiência</div>
+        <p class="mb-2">Interface componentizada, rotas dedicadas e integrações com as APIs existentes.</p>
+        <ul class="list-unstyled mb-0">
+          <li class="d-flex align-items-center gap-2 mb-2">
+            <i class="fa fa-check-circle text-success"></i>
+            <span>Catálogo com busca por categoria</span>
+          </li>
+          <li class="d-flex align-items-center gap-2 mb-2">
+            <i class="fa fa-check-circle text-success"></i>
+            <span>Carrinho persistente e checkout simplificado</span>
+          </li>
+          <li class="d-flex align-items-center gap-2">
+            <i class="fa fa-check-circle text-success"></i>
+            <span>Pedidos e autenticação usando os microserviços</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 mb-0">Destaques</h2>
+    <a routerLink="/products" class="btn btn-link">Ver catálogo</a>
+  </div>
+  <div class="row g-3">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let product of featuredProducts">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </div>
+</section>
