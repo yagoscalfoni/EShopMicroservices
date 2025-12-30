@@ -42,6 +42,16 @@ USE_GATEWAY=true TEST_USER_EMAIL=tester@example.com TEST_USER_PASSWORD="P@ssword
 k6 run load-tests/journeys/checkout.stress.js
 ```
 
+## Observability and visualization
+- A Docker-based stack under `load-tests/observability` provides InfluxDB for k6 metrics storage and Grafana for real-time and historical dashboards.
+- Start the stack locally with: `docker compose -f load-tests/observability/docker-compose.observability.yml --env-file load-tests/observability/.env.observability up -d`.
+- Send k6 results to InfluxDB by adding the output flag (example for catalog load test):
+  ```bash
+  K6_OUT=influxdb=http://k6:k6pass@localhost:8086/k6 \
+  k6 run --tag run_id=$(date +%Y%m%d%H%M%S) --tag service=catalog --tag test_type=load load-tests/catalog/catalog.load.js
+  ```
+- Open Grafana at `http://localhost:3000` (credentials configurable via `.env.observability`) and use the **k6 Load Tests - Overview** dashboard to review throughput, latency percentiles, errors, and per-endpoint trends. Use the `run_id` filter to compare multiple executions.
+
 ## What we intentionally do NOT load test
 - **Admin-only or low-frequency endpoints beyond the ones above**: the suite focuses on shopper-facing traffic. Admin APIs should be profiled separately with lower concurrency.
 - **gRPC Discount service**: exposed internally; omitted from HTTP load to keep scope on public REST APIs.
