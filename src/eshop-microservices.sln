@@ -64,6 +64,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 		prometheus.yml = prometheus.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services.IntegrationTests", "Services.IntegrationTests", "{C21C6EE4-B0C5-49CD-8AD5-AE1B21699635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API.IntegrationTests", "Tests\Services.IntegrationTests\Catalog.API.IntegrationTests\Catalog.API.IntegrationTests.csproj", "{F97B55C0-AF60-495C-9986-DF5FA410B42A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +138,10 @@ Global
 		{809C3B23-B89E-493E-AA32-A59BA8C97B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{809C3B23-B89E-493E-AA32-A59BA8C97B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{809C3B23-B89E-493E-AA32-A59BA8C97B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97B55C0-AF60-495C-9986-DF5FA410B42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97B55C0-AF60-495C-9986-DF5FA410B42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97B55C0-AF60-495C-9986-DF5FA410B42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97B55C0-AF60-495C-9986-DF5FA410B42A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,6 +169,8 @@ Global
 		{7D82637B-C48D-425F-B629-2CE0EF2F7122} = {8915FFF6-31A7-4008-B98B-A89D996E95A5}
 		{D4A49E33-F676-48F1-9CCC-E3185C3449B4} = {8915FFF6-31A7-4008-B98B-A89D996E95A5}
 		{809C3B23-B89E-493E-AA32-A59BA8C97B99} = {8915FFF6-31A7-4008-B98B-A89D996E95A5}
+		{C21C6EE4-B0C5-49CD-8AD5-AE1B21699635} = {389F1A70-AC2F-46F9-B7F5-05F9FD2FEF99}
+		{F97B55C0-AF60-495C-9986-DF5FA410B42A} = {C21C6EE4-B0C5-49CD-8AD5-AE1B21699635}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4C1ECE9-A4AD-4FED-B0FC-7EA1636ACABF}

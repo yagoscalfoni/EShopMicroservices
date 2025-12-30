@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adicionar serviços ao contêiner.
+// Adicionar servios ao continer.
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
@@ -16,7 +16,7 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddCarter();
 
-// Adicionar Swagger para documentação
+// Adicionar Swagger para documentao
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -33,13 +33,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configuração do Marten
+// Configurao do Marten
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
-// Inicialização de dados no ambiente de desenvolvimento
+// Inicializao de dados no ambiente de desenvolvimento
 if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialData>();
 
@@ -51,7 +51,7 @@ builder.Services.AddHealthChecks()
 
 var app = builder.Build();
 
-// Configuração do Swagger em desenvolvimento
+// Configurao do Swagger em desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -62,7 +62,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Configurar o pipeline de requisições HTTP.
+// Configurar o pipeline de requisies HTTP.
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });
@@ -74,3 +74,5 @@ app.UseHealthChecks("/health",
     });
 
 app.Run();
+
+public partial class Program { }
