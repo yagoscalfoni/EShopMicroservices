@@ -52,23 +52,6 @@ k6 run load-tests/journeys/checkout.stress.js
   ```
 - Open Grafana at `http://localhost:3000` (credentials configurable via `.env.observability`) and use the **k6 Load Tests - Overview** dashboard to review throughput, latency percentiles, errors, and per-endpoint trends. Use the `run_id` filter to compare multiple executions.
 
-### Guia rápido (docker compose já iniciado com todos os serviços)
-1) Garanta que o stack de microservices está ativo (`docker-compose up --build` na raiz do projeto).
-2) Suba a pilha de observabilidade em paralelo (sem interferir no restante):
-   ```bash
-   docker compose -f load-tests/observability/docker-compose.observability.yml --env-file load-tests/observability/.env.observability up -d
-   ```
-3) Rode o teste de carga desejado apontando a saída para o InfluxDB que já está rodando:
-   ```bash
-   # exemplo: cenário de carga do carrinho via gateway com tags para filtrar no Grafana
-   USE_GATEWAY=true TEST_USER_EMAIL=tester@example.com TEST_USER_PASSWORD="P@ssword123!" \
-   K6_OUT=influxdb=http://k6:k6pass@localhost:8086/k6 \
-   k6 run --tag run_id=$(date +%Y%m%d%H%M%S) --tag service=basket --tag test_type=load load-tests/basket/basket.load.js
-   ```
-   - Se preferir, use `./load-tests/observability/run-with-influx.sh <script>` para evitar esquecer tags/variáveis.
-4) Visualize em tempo real acessando `http://localhost:3000` (Grafana) e abrindo o dashboard **k6 Load Tests - Overview**. Filtre por `run_id`, `service`, `test_type` ou `scenario` conforme necessário.
-5) Para comparar execuções anteriores, mantenha os volumes nomeados (`influxdb-data`, `grafana-data`) e reutilize `run_id` descritivos (ex.: `release-2405`, `hotfix-latency`).
-
 ## What we intentionally do NOT load test
 - **Admin-only or low-frequency endpoints beyond the ones above**: the suite focuses on shopper-facing traffic. Admin APIs should be profiled separately with lower concurrency.
 - **gRPC Discount service**: exposed internally; omitted from HTTP load to keep scope on public REST APIs.
