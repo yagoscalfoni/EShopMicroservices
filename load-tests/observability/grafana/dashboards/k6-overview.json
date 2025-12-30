@@ -1,0 +1,216 @@
+{
+  "id": null,
+  "uid": "k6-observability",
+  "title": "k6 Load Tests - Overview",
+  "tags": ["k6", "load-testing", "observability"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "style": "dark",
+  "panels": [
+    {
+      "type": "row",
+      "title": "Execution summary",
+      "id": 1
+    },
+    {
+      "type": "stat",
+      "title": "Requests per second",
+      "id": 2,
+      "gridPos": {"x": 0, "y": 1, "w": 6, "h": 4},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT NON_NEGATIVE_DERIVATIVE(SUM(\"count\"),1s) FROM \"http_reqs\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}, "orientation": "horizontal"},
+      "fieldConfig": {"defaults": {"unit": "reqps", "decimals": 2}, "overrides": []}
+    },
+    {
+      "type": "stat",
+      "title": "Avg response time",
+      "id": 3,
+      "gridPos": {"x": 6, "y": 1, "w": 6, "h": 4},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT mean(\"value\") FROM \"http_req_duration\" WHERE $timeFilter",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}, "orientation": "horizontal"},
+      "fieldConfig": {"defaults": {"unit": "ms", "decimals": 0}, "overrides": []}
+    },
+    {
+      "type": "stat",
+      "title": "p95 / p99 latency",
+      "id": 4,
+      "gridPos": {"x": 12, "y": 1, "w": 6, "h": 4},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {"query": "SELECT percentile(\"value\",95) FROM \"http_req_duration\" WHERE $timeFilter", "refId": "A"},
+        {"query": "SELECT percentile(\"value\",99) FROM \"http_req_duration\" WHERE $timeFilter", "refId": "B"}
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "fieldConfig": {"defaults": {"unit": "ms", "decimals": 0}, "overrides": []}
+    },
+    {
+      "type": "stat",
+      "title": "Error rate",
+      "id": 5,
+      "gridPos": {"x": 18, "y": 1, "w": 6, "h": 4},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT mean(\"value\")*100 FROM \"http_req_failed\" WHERE $timeFilter",
+          "refId": "A"
+        }
+      ],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"]}},
+      "fieldConfig": {"defaults": {"unit": "percent", "decimals": 2, "max": 100}, "overrides": []}
+    },
+    {
+      "type": "row",
+      "title": "Performance over time",
+      "id": 6,
+      "gridPos": {"x": 0, "y": 5, "w": 24, "h": 1}
+    },
+    {
+      "type": "timeseries",
+      "title": "Request throughput",
+      "id": 7,
+      "gridPos": {"x": 0, "y": 6, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT NON_NEGATIVE_DERIVATIVE(SUM(\"count\"),1s) FROM \"http_reqs\" WHERE $timeFilter GROUP BY time($__interval), \"test_type\", \"service\" fill(null)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {"defaults": {"unit": "reqps"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}}
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency percentiles",
+      "id": 8,
+      "gridPos": {"x": 12, "y": 6, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {"query": "SELECT percentile(\"value\",95) FROM \"http_req_duration\" WHERE $timeFilter GROUP BY time($__interval), \"name\" fill(null)", "refId": "A"},
+        {"query": "SELECT percentile(\"value\",99) FROM \"http_req_duration\" WHERE $timeFilter GROUP BY time($__interval), \"name\" fill(null)", "refId": "B"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "ms"}, "overrides": []},
+      "options": {"legend": {"displayMode": "table", "placement": "bottom"}}
+    },
+    {
+      "type": "timeseries",
+      "title": "Error rate over time",
+      "id": 9,
+      "gridPos": {"x": 0, "y": 14, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {"query": "SELECT mean(\"value\")*100 FROM \"http_req_failed\" WHERE $timeFilter GROUP BY time($__interval), \"test_type\", \"service\" fill(null)", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "percent"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}}
+    },
+    {
+      "type": "bargauge",
+      "title": "Status code distribution",
+      "id": 10,
+      "gridPos": {"x": 12, "y": 14, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {"query": "SELECT sum(\"count\") FROM \"http_reqs\" WHERE $timeFilter GROUP BY \"status\" fill(0)", "refId": "A"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": []}
+    },
+    {
+      "type": "row",
+      "title": "Endpoint and scenario drilldowns",
+      "id": 11,
+      "gridPos": {"x": 0, "y": 22, "w": 24, "h": 1}
+    },
+    {
+      "type": "table",
+      "title": "Top endpoints by latency (p95)",
+      "id": 12,
+      "gridPos": {"x": 0, "y": 23, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT percentile(\"value\",95) FROM \"http_req_duration\" WHERE $timeFilter GROUP BY \"name\" ORDER BY DESC LIMIT 10",
+          "refId": "A"
+        }
+      ],
+      "options": {"showHeader": true}
+    },
+    {
+      "type": "table",
+      "title": "Top endpoints by error rate",
+      "id": 13,
+      "gridPos": {"x": 12, "y": 23, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT mean(\"value\")*100 FROM \"http_req_failed\" WHERE $timeFilter GROUP BY \"name\" ORDER BY DESC LIMIT 10",
+          "refId": "A"
+        }
+      ],
+      "options": {"showHeader": true},
+      "fieldConfig": {"defaults": {"unit": "percent"}, "overrides": []}
+    },
+    {
+      "type": "table",
+      "title": "Scenario throughput",
+      "id": 14,
+      "gridPos": {"x": 0, "y": 31, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT NON_NEGATIVE_DERIVATIVE(SUM(\"count\"),1s) FROM \"http_reqs\" WHERE $timeFilter GROUP BY \"scenario\"",
+          "refId": "A"
+        }
+      ],
+      "options": {"showHeader": true},
+      "fieldConfig": {"defaults": {"unit": "reqps"}, "overrides": []}
+    },
+    {
+      "type": "timeseries",
+      "title": "Run comparison by run_id",
+      "id": 15,
+      "gridPos": {"x": 12, "y": 31, "w": 12, "h": 8},
+      "datasource": "k6-influxdb",
+      "targets": [
+        {
+          "query": "SELECT percentile(\"value\",95) FROM \"http_req_duration\" WHERE $timeFilter AND \"run_id\" =~ /^$run_id$/ GROUP BY time($__interval), \"run_id\" fill(null)",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {"defaults": {"unit": "ms"}, "overrides": []},
+      "options": {"legend": {"displayMode": "list", "placement": "bottom"}}
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "run_id",
+        "type": "query",
+        "datasource": "k6-influxdb",
+        "query": "SHOW TAG VALUES FROM http_req_duration WITH KEY = run_id",
+        "refresh": 1,
+        "includeAll": true,
+        "allValue": ".*",
+        "multi": true
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  }
+}
