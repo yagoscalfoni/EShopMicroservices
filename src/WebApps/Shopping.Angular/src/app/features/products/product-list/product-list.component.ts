@@ -7,6 +7,7 @@ import { CatalogService } from '../../../core/services/catalog.service';
 import { productImageUrl } from '../../../core/utils/image-url';
 import { CategoryMenuComponent } from '../../../shared/components/category-menu/category-menu.component';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { ToastrService } from '../../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-product-list',
@@ -22,7 +23,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private readonly catalogService: CatalogService,
-    private readonly basketService: BasketService
+    private readonly basketService: BasketService,
+    private readonly toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -34,10 +36,13 @@ export class ProductListComponent implements OnInit {
       ? this.catalogService.getProductsByCategory(category)
       : this.catalogService.getProducts();
 
-    request$.subscribe((response) => {
-      this.products = category ? response.products : response.products;
-      this.categories = Array.from(new Set(response.products.flatMap((p) => p.category)));
-      this.selectedCategory = category ?? null;
+    request$.subscribe({
+      next: (response) => {
+        this.products = response.products;
+        this.categories = Array.from(new Set(response.products.flatMap((p) => p.category)));
+        this.selectedCategory = category ?? null;
+      },
+      error: () => this.toastrService.showDanger('Não foi possível carregar os produtos.')
     });
   }
 
@@ -46,7 +51,10 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    this.basketService.addItem(product).subscribe();
+    this.basketService.addItem(product).subscribe({
+      next: () => this.toastrService.showInfo(`${product.name} adicionado ao carrinho.`),
+      error: () => this.toastrService.showDanger('Não foi possível adicionar o produto ao carrinho.')
+    });
   }
 
   imageUrl(product: Product): string {

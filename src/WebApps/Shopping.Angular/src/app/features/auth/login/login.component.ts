@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ToastrService } from '../../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
   error = '';
 
@@ -31,7 +33,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +46,7 @@ export class LoginComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.toastrService.showWarning('Preencha os campos obrigatórios para continuar.');
       return;
     }
 
@@ -51,7 +55,7 @@ export class LoginComponent implements OnInit {
       password: this.form.value.password!
     }).subscribe({
       next: () => this.router.navigate(['/products']),
-      error: () => this.error = 'Falha ao autenticar. Verifique as credenciais.'
+      error: () => this.toastrService.showDanger('Falha ao autenticar. Verifique as credenciais.')
     });
   }
 }
