@@ -31,7 +31,16 @@ public class GetAccountOverviewHandler : IQueryHandler<GetAccountOverviewQuery, 
                 throw new UserNotFoundException(request.UserId);
             }
 
-            return new GetAccountOverviewResult(new AccountOverviewDto(string.Empty, string.Empty, new(), string.Empty, 0, new()));
+            return new GetAccountOverviewResult(
+                new AccountOverviewDto(
+                    string.Empty,
+                    string.Empty,
+                    new List<string>(),
+                    string.Empty,
+                    0,
+                    new List<string>()
+                )
+            );
         }
 
         var overviewDto = new AccountOverviewDto(
