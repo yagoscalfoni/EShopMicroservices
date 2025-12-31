@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
 using User.Application.Dtos;
 using User.Application.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetAccountJourney;
 
@@ -17,9 +18,11 @@ public class GetAccountJourneyHandler : IQueryHandler<GetAccountJourneyQuery, Ge
 
     public async Task<GetAccountJourneyResult> Handle(GetAccountJourneyQuery request, CancellationToken cancellationToken)
     {
+        var userId = UserId.Of(request.UserId);
+
         var user = await _dbContext.Users
             .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Id.Value == request.UserId, cancellationToken);
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
 
         if (user is null)
         {
@@ -30,29 +33,29 @@ public class GetAccountJourneyHandler : IQueryHandler<GetAccountJourneyQuery, Ge
             .AsNoTracking()
             .Include(o => o.Benefits)
             .Include(o => o.PendingActions)
-            .FirstOrDefaultAsync(o => o.UserId.Value == request.UserId, cancellationToken);
+            .FirstOrDefaultAsync(o => o.UserId == userId, cancellationToken);
 
         var addresses = await _dbContext.UserAddresses
             .AsNoTracking()
-            .Where(a => a.UserId.Value == request.UserId)
+            .Where(a => a.UserId == userId)
             .OrderByDescending(a => a.IsDefault)
             .ToListAsync(cancellationToken);
 
         var paymentMethods = await _dbContext.PaymentMethods
             .AsNoTracking()
-            .Where(p => p.UserId.Value == request.UserId)
+            .Where(p => p.UserId == userId)
             .OrderByDescending(p => p.Preferred)
             .ToListAsync(cancellationToken);
 
         var tickets = await _dbContext.SupportTickets
             .AsNoTracking()
-            .Where(t => t.UserId.Value == request.UserId)
+            .Where(t => t.UserId == userId)
             .OrderByDescending(t => t.UpdatedAt)
             .ToListAsync(cancellationToken);
 
         var recommendations = await _dbContext.SecurityRecommendations
             .AsNoTracking()
-            .Where(r => r.UserId.Value == request.UserId)
+            .Where(r => r.UserId == userId)
             .ToListAsync(cancellationToken);
 
         var journey = new AccountJourneyDto(

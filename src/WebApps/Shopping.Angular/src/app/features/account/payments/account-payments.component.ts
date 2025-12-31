@@ -12,7 +12,7 @@ import { PaymentMethod } from '../../../core/models/account.model';
 })
 export class AccountPaymentsComponent {
   readonly methods$: Observable<PaymentMethod[]> = this.route.data.pipe(
-    map((data) => data['paymentMethods'])
+    map((data) => data['journey'].paymentMethods)
   );
 
   constructor(private readonly route: ActivatedRoute) {}
