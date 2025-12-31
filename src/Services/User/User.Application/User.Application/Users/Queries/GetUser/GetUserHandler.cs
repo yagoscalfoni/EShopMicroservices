@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 using User.Application.Extensions;
+using User.Domain.Exceptions;
 
 namespace User.Application.Users.Queries.GetUser
 {
@@ -22,6 +23,11 @@ namespace User.Application.Users.Queries.GetUser
             var user = await _dbContext.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id.Value == query.UserId, cancellationToken);
+
+            if (user is null)
+            {
+                throw new DomainException($"User with id {query.UserId} was not found.");
+            }
 
             return new GetUserResult(user.ToUserDto());
         }

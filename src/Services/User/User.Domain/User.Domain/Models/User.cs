@@ -107,5 +107,17 @@
             FailedLoginAttempts = 0;
             LockoutEnd = null;
         }
+
+        public void UpdateProfile(string firstName, string lastName, string email, string phoneNumber)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(firstName);
+            ArgumentException.ThrowIfNullOrWhiteSpace(lastName);
+            ArgumentException.ThrowIfNullOrWhiteSpace(email);
+
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            PhoneNumber = phoneNumber;
+        }
     }
 }

@@ -1,0 +1,67 @@
+<section class="user-management">
+  <header>
+    <h1>Gerenciar usuários</h1>
+    <p>Crie, edite ou remova usuários conectando diretamente com o serviço de usuários.</p>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()" class="user-form">
+    <div class="form-grid">
+      <label>
+        <span>Nome</span>
+        <input type="text" formControlName="firstName" placeholder="Primeiro nome" />
+      </label>
+      <label>
+        <span>Sobrenome</span>
+        <input type="text" formControlName="lastName" placeholder="Último nome" />
+      </label>
+      <label>
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="email@dominio.com" />
+      </label>
+      <label>
+        <span>Telefone</span>
+        <input type="text" formControlName="phoneNumber" placeholder="(11) 98888-0000" />
+      </label>
+      <label>
+        <span>Senha</span>
+        <input type="password" formControlName="password" placeholder="******" [required]="!isEditing" />
+      </label>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="loading">{{ isEditing ? 'Salvar alterações' : 'Criar usuário' }}</button>
+      <button type="button" class="secondary" (click)="resetForm()">Limpar</button>
+    </div>
+  </form>
+
+  <div class="status" *ngIf="loading">Carregando usuários...</div>
+  <div class="status error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <table *ngIf="users.length" class="user-table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Criado em</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phoneNumber || '—' }}</td>
+        <td>{{ user.createdAt | date: 'short' }}</td>
+        <td class="row-actions">
+          <button type="button" (click)="startEdit(user)">Editar</button>
+          <button type="button" class="danger" (click)="removeUser(user.userId)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="empty" *ngIf="!loading && !users.length">
+    <p>Nenhum usuário cadastrado ainda.</p>
+  </div>
+</section>
