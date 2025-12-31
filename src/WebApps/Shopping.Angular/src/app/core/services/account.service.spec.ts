@@ -67,7 +67,7 @@ describe('AccountService', () => {
     req.flush({ journey: journeyResponse });
   });
 
-  it('should provide derived slices individually', (done) => {
+  it('should fetch each slice independently with dedicated endpoints', (done) => {
     service.getOverview().subscribe((overview) => {
       expect(overview.lastOrderId).toContain('#');
       expect(overview.pendingActions.length).toBeGreaterThan(0);

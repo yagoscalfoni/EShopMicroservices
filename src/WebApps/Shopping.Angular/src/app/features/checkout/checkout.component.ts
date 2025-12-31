@@ -16,6 +16,7 @@ import { ToastrService } from '../../shared/services/toastr.service';
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
   submitting = false;
+  message = '';
 
   // Usamos um Subject para orquestrar envios da mesma forma que um fluxo de eventos.
   // Isso nos permite aplicar operadores como exhaustMap e centralizar o tratamento de resposta.
@@ -57,10 +58,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             tap({
               next: () => {
                 this.toastrService.showInfo('Pedido enviado com sucesso!');
+                this.message = 'Pedido enviado com sucesso!';
                 this.submitting = false;
               },
               error: () => {
                 this.toastrService.showDanger('Falha ao finalizar o pedido. Tente novamente.');
+                this.message = 'Falha ao finalizar o pedido. Tente novamente.';
                 this.submitting = false;
               }
             }),
