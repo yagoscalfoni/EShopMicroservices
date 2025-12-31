@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.Monitoring;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
@@ -19,6 +20,7 @@ namespace User.API
 
         public static WebApplication UseApiServices(this WebApplication app)
         {
+            app.UseApiPerformanceMonitoring();
             app.MapCarter();
 
             app.UseExceptionHandler(options => { });
