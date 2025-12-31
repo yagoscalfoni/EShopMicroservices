@@ -1,11 +1,5 @@
 import { Routes } from '@angular/router';
-import {
-  accountAddressesResolver,
-  accountOverviewResolver,
-  accountPaymentMethodsResolver,
-  accountProfileResolver,
-  accountSupportTicketsResolver
-} from './account.resolvers';
+import { accountJourneyResolver } from './account-journey.resolver';
 
 export const accountRoutes: Routes = [
   {
@@ -15,27 +9,27 @@ export const accountRoutes: Routes = [
   },
   {
     path: 'resumo',
-    resolve: { overview: accountOverviewResolver },
+    resolve: { journey: accountJourneyResolver },
     loadComponent: () => import('./overview/account-overview.component').then((m) => m.AccountOverviewComponent)
   },
   {
     path: 'perfil',
-    resolve: { profile: accountProfileResolver },
+    resolve: { journey: accountJourneyResolver },
     loadComponent: () => import('./profile/account-profile.component').then((m) => m.AccountProfileComponent)
   },
   {
     path: 'enderecos',
-    resolve: { addresses: accountAddressesResolver },
+    resolve: { journey: accountJourneyResolver },
     loadComponent: () => import('./addresses/account-addresses.component').then((m) => m.AccountAddressesComponent)
   },
   {
     path: 'pagamentos',
-    resolve: { paymentMethods: accountPaymentMethodsResolver },
+    resolve: { journey: accountJourneyResolver },
     loadComponent: () => import('./payments/account-payments.component').then((m) => m.AccountPaymentsComponent)
   },
   {
     path: 'suporte',
-    resolve: { supportTickets: accountSupportTicketsResolver },
+    resolve: { journey: accountJourneyResolver },
     loadComponent: () => import('./support/account-support.component').then((m) => m.AccountSupportComponent)
   }
 ];

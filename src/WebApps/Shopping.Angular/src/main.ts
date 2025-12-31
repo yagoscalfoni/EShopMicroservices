@@ -5,6 +5,7 @@ import { provideRouter } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { AuthInterceptor } from './app/core/interceptors/auth.interceptor';
+import { LoadingInterceptor } from './app/core/interceptors/loading.interceptor';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -15,6 +16,11 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
