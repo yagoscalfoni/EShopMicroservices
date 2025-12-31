@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
 using User.Application.Dtos;
 using User.Application.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetSupportTickets;
 
@@ -17,7 +18,7 @@ public class GetSupportTicketsHandler : IQueryHandler<GetSupportTicketsQuery, Ge
 
     public async Task<GetSupportTicketsResult> Handle(GetSupportTicketsQuery request, CancellationToken cancellationToken)
     {
-        var userExists = await _dbContext.Users.AnyAsync(u => u.Id.Value == request.UserId, cancellationToken);
+        var userExists = await _dbContext.Users.AnyAsync(u => u.Id == UserId.Of(request.UserId), cancellationToken);
         if (!userExists)
         {
             throw new UserNotFoundException(request.UserId);
@@ -25,7 +26,7 @@ public class GetSupportTicketsHandler : IQueryHandler<GetSupportTicketsQuery, Ge
 
         var tickets = await _dbContext.SupportTickets
             .AsNoTracking()
-            .Where(r => r.UserId.Value == request.UserId)
+            .Where(r => r.UserId == UserId.Of(request.UserId))
             .OrderByDescending(t => t.UpdatedAt)
             .Select(t => new SupportTicketDto(
                 t.TicketNumber,

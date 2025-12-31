@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using User.Application.Extensions;
 using User.Domain.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetUser
 {
@@ -22,7 +23,7 @@ namespace User.Application.Users.Queries.GetUser
         {
             var user = await _dbContext.Users
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Id.Value == query.UserId, cancellationToken);
+                .FirstOrDefaultAsync(u => u.Id == UserId.Of(query.UserId), cancellationToken);
 
             if (user is null)
             {

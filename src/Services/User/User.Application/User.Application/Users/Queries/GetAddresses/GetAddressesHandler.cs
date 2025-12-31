@@ -18,7 +18,7 @@ public class GetAddressesHandler : IQueryHandler<GetAddressesQuery, GetAddresses
 
     public async Task<GetAddressesResult> Handle(GetAddressesQuery request, CancellationToken cancellationToken)
     {
-        var userExists = await _dbContext.Users.AnyAsync(u => u.Id.Value == request.UserId, cancellationToken);
+        var userExists = await _dbContext.Users.AnyAsync(u => u.Id == UserId.Of(request.UserId), cancellationToken);
         if (!userExists)
         {
             throw new UserNotFoundException(request.UserId);

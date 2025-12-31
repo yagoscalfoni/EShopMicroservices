@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
 using User.Application.Dtos;
 using User.Application.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetProfileDetails;
 
@@ -19,7 +20,7 @@ public class GetProfileDetailsHandler : IQueryHandler<GetProfileDetailsQuery, Ge
     {
         var user = await _dbContext.Users
             .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Id.Value == request.UserId, cancellationToken);
+            .FirstOrDefaultAsync(u => u.Id == UserId.Of(request.UserId), cancellationToken);
 
         if (user is null)
         {
@@ -28,7 +29,7 @@ public class GetProfileDetailsHandler : IQueryHandler<GetProfileDetailsQuery, Ge
 
         var recommendations = await _dbContext.SecurityRecommendations
             .AsNoTracking()
-            .Where(r => r.UserId.Value == request.UserId)
+            .Where(r => r.UserId == UserId.Of(request.UserId))
             .Select(r => r.Description)
             .ToListAsync(cancellationToken);
 

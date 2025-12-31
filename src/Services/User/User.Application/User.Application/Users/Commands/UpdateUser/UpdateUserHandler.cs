@@ -4,6 +4,7 @@ using User.Application.Data;
 using User.Application.Extensions;
 using User.Application.Users.Commands.UpdateUser;
 using User.Domain.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Commands.UpdateUser;
 
@@ -11,7 +12,7 @@ public class UpdateUserHandler(IApplicationDbContext dbContext) : ICommandHandle
 {
     public async Task<UpdateUserResult> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Id.Value == command.UserId, cancellationToken);
+        var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == UserId.Of(command.UserId), cancellationToken);
         if (user is null)
         {
             throw new DomainException($"User with id {command.UserId} was not found.");
