@@ -9,7 +9,8 @@ namespace User.API.Endpoints;
 /// <param name="LastName">Last name of the user.</param>
 /// <param name="Email">Email address.</param>
 /// <param name="Password">User password.</param>
-public record RegisterUserRequest(string FirstName, string LastName, string Email, string Password);
+/// <param name="PhoneNumber">User phone number.</param>
+public record RegisterUserRequest(string FirstName, string LastName, string Email, string Password, string PhoneNumber = "");
 
 /// <summary>
 /// Response containing created user information.

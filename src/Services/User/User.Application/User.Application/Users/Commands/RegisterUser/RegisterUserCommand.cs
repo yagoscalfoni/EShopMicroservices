@@ -1,11 +1,12 @@
 using BuildingBlocks.CQRS;
 using FluentValidation;
+using User.Application.Dtos;
 
 namespace User.Application.Users.Commands.RegisterUser;
 
-public record RegisterUserCommand(string FirstName, string LastName, string Email, string Password) : ICommand<RegisterUserResult>;
+public record RegisterUserCommand(string FirstName, string LastName, string Email, string Password, string PhoneNumber = "") : ICommand<RegisterUserResult>;
 
-public record RegisterUserResult(Guid Id, string Email);
+public record RegisterUserResult(Guid Id, string Email, UserDto User);
 
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {

@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using BuildingBlocks.CQRS;
 using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
+using User.Application.Extensions;
 using User.Domain.Exceptions;
 using User.Domain.Models;
 using User.Domain.ValueObjects;
@@ -29,13 +30,14 @@ public class RegisterUserHandler(IApplicationDbContext dbContext)
             email: command.Email,
             passwordHash: hash,
             passwordSalt: salt,
-            createdAt: DateTime.UtcNow
+            createdAt: DateTime.UtcNow,
+            phoneNumber: command.PhoneNumber ?? string.Empty
         );
 
         dbContext.Users.Add(user);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        return new RegisterUserResult(user.Id.Value, user.Email);
+        return new RegisterUserResult(user.Id.Value, user.Email, user.ToUserDto());
     }
 
     private static string GenerateSalt()

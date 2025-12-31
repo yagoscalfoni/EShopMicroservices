@@ -23,6 +23,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/account/account.routes').then((m) => m.accountRoutes)
   },
   {
+    path: 'users',
+    canActivate: [authenticatedGuard],
+    loadComponent: () => import('./features/users/user-management.component').then((m) => m.UserManagementComponent)
+  },
+  {
     path: 'products',
     loadComponent: () => import('./features/products/product-list/product-list.component').then((m) => m.ProductListComponent)
   },
