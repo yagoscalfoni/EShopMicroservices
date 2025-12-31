@@ -1,0 +1,21 @@
+<div class="d-flex flex-column gap-3" *ngIf="methods$ | async as methods">
+  <div class="alert alert-success mb-0">
+    Defina uma forma de pagamento preferida para agilizar o checkout e melhorar a conversão em dispositivos móveis.
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6" *ngFor="let method of methods">
+      <div class="p-3 border rounded h-100">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
+            <h6 class="mb-0">{{ method.brand }}</h6>
+            <small class="text-muted">{{ method.type }}</small>
+          </div>
+          <span *ngIf="method.preferred" class="badge text-bg-primary">Preferido</span>
+        </div>
+        <p class="mb-1">Final {{ method.last4 }}</p>
+        <p class="mb-0 text-muted">Validade: {{ method.expiry }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<section class="container py-4">
+  <div class="row">
+    <div class="col-12 col-lg-3 mb-3 mb-lg-0">
+      <div class="list-group shadow-sm">
+        <a
+          *ngFor="let item of navigation"
+          class="list-group-item list-group-item-action d-flex align-items-center"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+        >
+          <i class="fa" [ngClass]="item.icon"></i>
+          <span class="ms-2">{{ item.label }}</span>
+        </a>
+      </div>
+    </div>
+    <div class="col-12 col-lg-9">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
