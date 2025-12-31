@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { AddressSummary } from '../../../core/models/account.model';
-import { AccountService } from '../../../core/services/account.service';
 
 @Component({
   selector: 'app-account-addresses',
@@ -11,7 +11,9 @@ import { AccountService } from '../../../core/services/account.service';
   templateUrl: './account-addresses.component.html'
 })
 export class AccountAddressesComponent {
-  readonly addresses$: Observable<AddressSummary[]> = this.accountService.getAddresses();
+  readonly addresses$: Observable<AddressSummary[]> = this.route.data.pipe(
+    map((data) => data['addresses'])
+  );
 
-  constructor(private readonly accountService: AccountService) {}
+  constructor(private readonly route: ActivatedRoute) {}
 }

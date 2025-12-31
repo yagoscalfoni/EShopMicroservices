@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { ProfileDetails } from '../../../core/models/account.model';
-import { AccountService } from '../../../core/services/account.service';
 
 @Component({
   selector: 'app-account-profile',
@@ -12,7 +12,9 @@ import { AccountService } from '../../../core/services/account.service';
   styleUrls: ['./account-profile.component.scss']
 })
 export class AccountProfileComponent {
-  readonly profile$: Observable<ProfileDetails> = this.accountService.getProfile();
+  readonly profile$: Observable<ProfileDetails> = this.route.data.pipe(
+    map((data) => data['profile'])
+  );
 
-  constructor(private readonly accountService: AccountService) {}
+  constructor(private readonly route: ActivatedRoute) {}
 }
