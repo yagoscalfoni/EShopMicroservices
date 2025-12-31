@@ -7,12 +7,33 @@
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <div class="form-group mb-3">
           <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" formControlName="email" required />
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            formControlName="email"
+            [class.is-invalid]="email?.invalid && (email?.touched || email?.dirty)"
+            required
+          />
+          <div class="invalid-feedback" *ngIf="email?.errors && (email?.touched || email?.dirty)">
+            <span *ngIf="email?.errors['required']">Informe o email.</span>
+            <span *ngIf="email?.errors['email']">Informe um email válido.</span>
+          </div>
         </div>
 
         <div class="form-group mb-3">
           <label for="password">Senha</label>
-          <input type="password" class="form-control" id="password" formControlName="password" required />
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            formControlName="password"
+            [class.is-invalid]="password?.invalid && (password?.touched || password?.dirty)"
+            required
+          />
+          <div class="invalid-feedback" *ngIf="password?.errors && (password?.touched || password?.dirty)">
+            <span *ngIf="password?.errors['required']">Informe a senha.</span>
+          </div>
         </div>
 
         <div class="form-check mb-3">
