@@ -1,0 +1,16 @@
+<div class="d-flex flex-column gap-3" *ngIf="tickets$ | async as tickets">
+  <div class="p-3 border rounded">
+    <h6 class="mb-1">Central do cliente</h6>
+    <p class="text-muted mb-0">Consulte os chamados abertos e acompanhe o retorno do time de atendimento.</p>
+  </div>
+
+  <div class="list-group">
+    <div *ngFor="let ticket of tickets" class="list-group-item d-flex justify-content-between align-items-start">
+      <div>
+        <div class="fw-semibold">{{ ticket.subject }}</div>
+        <small class="text-muted">{{ ticket.id }} • {{ ticket.updatedAt }}</small>
+      </div>
+      <span class="badge text-bg-secondary">{{ ticket.status }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="row g-3" *ngIf="profile$ | async as profile">
+  <div class="col-md-6">
+    <div class="p-3 border rounded h-100">
+      <h5>Informações básicas</h5>
+      <dl class="row mb-0 small">
+        <dt class="col-sm-4">Nome</dt>
+        <dd class="col-sm-8">{{ profile.name }}</dd>
+        <dt class="col-sm-4">E-mail</dt>
+        <dd class="col-sm-8">{{ profile.email }}</dd>
+        <dt class="col-sm-4">Telefone</dt>
+        <dd class="col-sm-8">{{ profile.phone }}</dd>
+        <dt class="col-sm-4">Documento</dt>
+        <dd class="col-sm-8">{{ profile.document }}</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="p-3 border rounded h-100">
+      <h5>Preferências</h5>
+      <p class="mb-1">Comunicações: {{ profile.marketingOptIn ? 'Habilitadas' : 'Desabilitadas' }}</p>
+      <p class="mb-2 text-muted small">Gerencie notificações sobre promoções, status de pedidos e ofertas exclusivas.</p>
+      <div class="alert alert-warning py-2 mb-0">
+        <strong>Segurança:</strong>
+        <ul class="mb-0 ps-3 small">
+          <li *ngFor="let recommendation of profile.securityRecommendations">{{ recommendation }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

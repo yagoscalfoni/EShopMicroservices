@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
@@ -12,7 +12,10 @@ import { ToastrService } from '../../../shared/services/toastr.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+
+export class LoginComponent implements OnInit {
+  error = '';
+
   get email() {
     return this.form.get('email');
   }
@@ -33,6 +36,12 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly toastrService: ToastrService
   ) {}
+
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['/account/resumo']);
+    }
+  }
 
   submit(): void {
     if (this.form.invalid) {

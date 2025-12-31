@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authenticatedGuard } from './core/guards/authenticated.guard';
+import { redirectAuthenticatedGuard } from './core/guards/redirect-authenticated.guard';
 
 export const routes: Routes = [
   {
@@ -7,11 +9,18 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [redirectAuthenticatedGuard],
     loadComponent: () => import('./features/auth/login/login.component').then((m) => m.LoginComponent)
   },
   {
     path: 'register',
     loadComponent: () => import('./features/auth/register/register.component').then((m) => m.RegisterComponent)
+  },
+  {
+    path: 'account',
+    canActivate: [authenticatedGuard],
+    loadComponent: () => import('./features/account/account.component').then((m) => m.AccountComponent),
+    loadChildren: () => import('./features/account/account.routes').then((m) => m.accountRoutes)
   },
   {
     path: 'products',

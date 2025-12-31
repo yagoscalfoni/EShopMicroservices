@@ -1,0 +1,22 @@
+<div class="d-flex flex-column gap-3" *ngIf="addresses$ | async as addresses">
+  <div class="alert alert-info mb-0">
+    Mantenha seus endereços atualizados para agilizar a jornada de checkout e evitar atrasos na entrega.
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6" *ngFor="let address of addresses">
+      <div class="border rounded p-3 h-100">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <div>
+            <div class="fw-semibold">{{ address.label }}</div>
+            <small class="text-muted">{{ address.receiver }}</small>
+          </div>
+          <span *ngIf="address.default" class="badge text-bg-success">Principal</span>
+        </div>
+        <p class="mb-1">{{ address.street }}</p>
+        <p class="mb-2 text-muted">{{ address.city }} - {{ address.state }} | {{ address.zipCode }}</p>
+        <p class="small text-secondary mb-0" *ngIf="address.deliveryNotes">{{ address.deliveryNotes }}</p>
+      </div>
+    </div>
+  </div>
+</div>
