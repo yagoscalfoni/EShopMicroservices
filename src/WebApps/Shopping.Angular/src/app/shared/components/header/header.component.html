@@ -33,10 +33,32 @@
 
       <!-- User / Login -->
       <ng-container *ngIf="user$ | async as user; else loginLink">
-        <button class="btn btn-primary btn-sm ms-2" type="button" (click)="logout()">
-          <i class="fa fa-user"></i>
-          <span class="ms-1">Hello, {{ user.name }}!</span>
-        </button>
+        <div class="dropdown">
+          <button class="btn btn-primary btn-sm dropdown-toggle ms-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            <span class="ms-1">Olá, {{ user.name }}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li class="dropdown-header">
+              <div class="fw-semibold">Jornada do cliente</div>
+              <small class="text-muted">Acesse rapidamente suas áreas</small>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li *ngFor="let link of userMenu">
+              <a class="dropdown-item d-flex align-items-center gap-2" [routerLink]="link.path">
+                <i class="fa" [ngClass]="link.icon"></i>
+                <span>{{ link.label }}</span>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button class="dropdown-item text-danger d-flex align-items-center gap-2" type="button" (click)="logout()">
+                <i class="fa fa-arrow-right-from-bracket"></i>
+                <span>Sair</span>
+              </button>
+            </li>
+          </ul>
+        </div>
       </ng-container>
 
       <ng-template #loginLink>
