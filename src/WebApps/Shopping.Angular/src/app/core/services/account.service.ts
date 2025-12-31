@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
+  AccountJourney,
   AccountOverview,
   AddressSummary,
   PaymentMethod,
