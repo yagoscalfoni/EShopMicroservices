@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
 using User.Application.Dtos;
 using User.Application.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetAddresses;
 
@@ -25,7 +26,7 @@ public class GetAddressesHandler : IQueryHandler<GetAddressesQuery, GetAddresses
 
         var addresses = await _dbContext.UserAddresses
             .AsNoTracking()
-            .Where(a => a.UserId.Value == request.UserId)
+            .Where(o => o.UserId == UserId.Of(request.UserId))
             .OrderByDescending(a => a.IsDefault)
             .Select(a => new AddressSummaryDto(
                 a.Label,

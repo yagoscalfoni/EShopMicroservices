@@ -14,7 +14,7 @@ namespace User.Infrastructure.Data.Extensions
                     firstName: "Mariana",
                     lastName: "Silva",
                     email: "mariana.silva@email.com",
-                    passwordHash: "hashedpassword1",
+                    passwordHash: " hashedpassword1",
                     passwordSalt: "salt1",
                     createdAt: DateTime.UtcNow,
                     phoneNumber: "+55 (11) 98888-1111",

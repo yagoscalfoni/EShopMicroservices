@@ -28,7 +28,7 @@ public class RegisterUserHandler(IApplicationDbContext dbContext)
             firstName: command.FirstName,
             lastName: command.LastName,
             email: command.Email,
-            passwordHash: hash,
+            passwordHash: command.Password, // Alterar futuramente por enquanto vai salvar direto sem criptografia
             passwordSalt: salt,
             createdAt: DateTime.UtcNow,
             phoneNumber: command.PhoneNumber ?? string.Empty

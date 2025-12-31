@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
 using User.Application.Dtos;
 using User.Application.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetPaymentMethods;
 
@@ -25,7 +26,7 @@ public class GetPaymentMethodsHandler : IQueryHandler<GetPaymentMethodsQuery, Ge
 
         var methods = await _dbContext.PaymentMethods
             .AsNoTracking()
-            .Where(p => p.UserId.Value == request.UserId)
+            .Where(o => o.UserId == UserId.Of(request.UserId))
             .OrderByDescending(p => p.Preferred)
             .Select(p => new PaymentMethodDto(
                 p.Brand,

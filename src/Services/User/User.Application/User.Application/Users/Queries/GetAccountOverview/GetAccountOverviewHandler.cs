@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using User.Application.Data;
 using User.Application.Dtos;
 using User.Application.Exceptions;
+using User.Domain.ValueObjects;
 
 namespace User.Application.Users.Queries.GetAccountOverview;
 
@@ -21,7 +22,11 @@ public class GetAccountOverviewHandler : IQueryHandler<GetAccountOverviewQuery, 
             .AsNoTracking()
             .Include(o => o.Benefits)
             .Include(o => o.PendingActions)
-            .FirstOrDefaultAsync(o => o.UserId.Value == request.UserId, cancellationToken);
+            .FirstOrDefaultAsync(
+                o => o.UserId == UserId.Of(request.UserId),
+                cancellationToken
+            );
+
 
         if (overview is null)
         {

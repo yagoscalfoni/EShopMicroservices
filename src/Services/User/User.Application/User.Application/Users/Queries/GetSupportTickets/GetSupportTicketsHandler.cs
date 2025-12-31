@@ -25,7 +25,7 @@ public class GetSupportTicketsHandler : IQueryHandler<GetSupportTicketsQuery, Ge
 
         var tickets = await _dbContext.SupportTickets
             .AsNoTracking()
-            .Where(t => t.UserId.Value == request.UserId)
+            .Where(r => r.UserId.Value == request.UserId)
             .OrderByDescending(t => t.UpdatedAt)
             .Select(t => new SupportTicketDto(
                 t.TicketNumber,
