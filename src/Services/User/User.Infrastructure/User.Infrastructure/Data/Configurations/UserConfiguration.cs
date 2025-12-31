@@ -74,6 +74,9 @@ namespace User.Infrastructure.Data.Configurations
             builder.Property(u => u.TwoFactorEnabled)
                    .IsRequired();
 
+            builder.Property(u => u.Document)
+                   .HasMaxLength(30);
+
             // Configurações para autenticação externa
             builder.Property(u => u.GoogleId)
                    .HasMaxLength(100);
