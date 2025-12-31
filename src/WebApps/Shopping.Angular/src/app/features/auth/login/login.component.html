@@ -16,8 +16,8 @@
             required
           />
           <div class="invalid-feedback" *ngIf="email?.errors && (email?.touched || email?.dirty)">
-            <span *ngIf="email?.errors['required']">Informe o email.</span>
-            <span *ngIf="email?.errors['email']">Informe um email válido.</span>
+            <span *ngIf="email?.errors?.['required']">Informe o email.</span>
+            <span *ngIf="email?.errors?.['email']">Informe um email válido.</span>
           </div>
         </div>
 
@@ -32,7 +32,7 @@
             required
           />
           <div class="invalid-feedback" *ngIf="password?.errors && (password?.touched || password?.dirty)">
-            <span *ngIf="password?.errors['required']">Informe a senha.</span>
+            <span *ngIf="password?.errors?.['required']">Informe a senha.</span>
           </div>
         </div>
 
