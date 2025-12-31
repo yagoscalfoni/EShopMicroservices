@@ -11,22 +11,26 @@
             <hr />
 
             <form method="post" asp-page="/Login">
+                <div asp-validation-summary="All" class="alert alert-danger" role="alert"></div>
+
                 <!-- Campo de Email -->
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="LoginData.Email" required />
+                    <label asp-for="LoginData.Email">Email</label>
+                    <input asp-for="LoginData.Email" class="form-control" type="email" />
+                    <span asp-validation-for="LoginData.Email" class="text-danger"></span>
                 </div>
 
                 <!-- Campo de Senha -->
                 <div class="form-group">
-                    <label for="password">Senha</label>
-                    <input type="password" class="form-control" id="password" name="LoginData.Password" required />
+                    <label asp-for="LoginData.Password">Senha</label>
+                    <input asp-for="LoginData.Password" class="form-control" type="password" />
+                    <span asp-validation-for="LoginData.Password" class="text-danger"></span>
                 </div>
 
                 <!-- Checkbox para Lembrar Senha -->
                 <div class="form-check mb-3">
-                    <input type="checkbox" class="form-check-input" id="rememberMe" name="LoginData.RememberMe" />
-                    <label class="form-check-label" for="rememberMe">Lembrar senha</label>
+                    <input asp-for="LoginData.RememberMe" class="form-check-input" />
+                    <label class="form-check-label" asp-for="LoginData.RememberMe">Lembrar senha</label>
                 </div>
 
                 <!-- Botão de Login -->
@@ -47,6 +51,7 @@
                     <a asp-page="/Register">Criar nova conta</a>
                 </p>
             </form>
+            <partial name="_ValidationScriptsPartial" />
         </div>
     </div>
 </div>
