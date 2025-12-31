@@ -22,6 +22,7 @@
         public string PreferredLanguage { get; private set; } = default!;
         public bool MarketingOptIn { get; private set; }
         public bool TwoFactorEnabled { get; private set; }
+        public string Document { get; private set; } = string.Empty;
         public string GoogleId { get; private set; } = default!;
         public string AppleId { get; private set; } = default!;
         public string FacebookId { get; private set; } = default!;
@@ -47,6 +48,7 @@
             string preferredLanguage = "en",
             bool marketingOptIn = false,
             bool twoFactorEnabled = false,
+            string document = "",
             string googleId = "",
             string appleId = "",
             string facebookId = ""
@@ -78,6 +80,7 @@
                 PreferredLanguage = preferredLanguage,
                 MarketingOptIn = marketingOptIn,
                 TwoFactorEnabled = twoFactorEnabled,
+                Document = document,
                 GoogleId = googleId,
                 AppleId = appleId,
                 FacebookId = facebookId

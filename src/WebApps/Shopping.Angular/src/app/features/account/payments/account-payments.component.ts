@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { PaymentMethod } from '../../../core/models/account.model';
-import { AccountService } from '../../../core/services/account.service';
 
 @Component({
   selector: 'app-account-payments',
@@ -11,7 +11,9 @@ import { AccountService } from '../../../core/services/account.service';
   templateUrl: './account-payments.component.html'
 })
 export class AccountPaymentsComponent {
-  readonly methods$: Observable<PaymentMethod[]> = this.accountService.getPaymentMethods();
+  readonly methods$: Observable<PaymentMethod[]> = this.route.data.pipe(
+    map((data) => data['journey'].paymentMethods)
+  );
 
-  constructor(private readonly accountService: AccountService) {}
+  constructor(private readonly route: ActivatedRoute) {}
 }
