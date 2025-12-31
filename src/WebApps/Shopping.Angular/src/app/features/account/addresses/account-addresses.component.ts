@@ -12,7 +12,7 @@ import { AddressSummary } from '../../../core/models/account.model';
 })
 export class AccountAddressesComponent {
   readonly addresses$: Observable<AddressSummary[]> = this.route.data.pipe(
-    map((data) => data['journey'].addresses)
+    map((data) => data['addresses'])
   );
 
   constructor(private readonly route: ActivatedRoute) {}

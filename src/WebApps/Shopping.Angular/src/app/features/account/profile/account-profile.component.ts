@@ -13,7 +13,7 @@ import { ProfileDetails } from '../../../core/models/account.model';
 })
 export class AccountProfileComponent {
   readonly profile$: Observable<ProfileDetails> = this.route.data.pipe(
-    map((data) => data['journey'].profile)
+    map((data) => data['profile'])
   );
 
   constructor(private readonly route: ActivatedRoute) {}

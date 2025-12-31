@@ -12,7 +12,7 @@ import { SupportTicket } from '../../../core/models/account.model';
 })
 export class AccountSupportComponent {
   readonly tickets$: Observable<SupportTicket[]> = this.route.data.pipe(
-    map((data) => data['journey'].supportTickets)
+    map((data) => data['supportTickets'])
   );
 
   constructor(private readonly route: ActivatedRoute) {}

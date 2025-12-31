@@ -1,14 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AccountService, DEFAULT_ACCOUNT_USER_ID } from './account.service';
-import { AccountJourney } from '../models/account.model';
 import { environment } from '../../../environments/environment';
 
 describe('AccountService', () => {
   let service: AccountService;
   let httpMock: HttpTestingController;
 
-  const journeyResponse: AccountJourney = {
+  const overviewResponse = {
     overview: {
       nextDeliveryWindow: 'Entrega prevista entre 10h - 14h no dia 25/06',
       loyaltyLevel: 'Cliente Gold',
@@ -16,7 +15,10 @@ describe('AccountService', () => {
       lastOrderId: '#548712',
       lastOrderTotal: 389.9,
       pendingActions: ['Adicionar endereço de trabalho', 'Salvar forma de pagamento preferida', 'Ativar notificação de ofertas']
-    },
+    }
+  };
+
+  const profileResponse = {
     profile: {
       name: 'Mariana Silva',
       email: 'mariana.silva@email.com',
@@ -24,7 +26,10 @@ describe('AccountService', () => {
       document: '123.456.789-10',
       marketingOptIn: true,
       securityRecommendations: ['Ative a confirmação em dois fatores', 'Atualize sua senha a cada 90 dias']
-    },
+    }
+  };
+
+  const addressesResponse = {
     addresses: [
       {
         label: 'Casa',
@@ -36,9 +41,15 @@ describe('AccountService', () => {
         default: true,
         deliveryNotes: 'Interfone na portaria e suba até o 4º andar'
       }
-    ],
-    paymentMethods: [{ brand: 'Visa', last4: '4829', expiry: '08/27', preferred: true, type: 'Credit Card' }],
-    supportTickets: [{ id: 'SUP-1023', subject: 'Status do pedido #548712', status: 'Respondido', updatedAt: '2024-06-20' }]
+    ]
+  };
+
+  const paymentsResponse = {
+    paymentMethods: [{ brand: 'Visa', last4: '4829', expiry: '08/27', preferred: true, type: 'Credit Card' }]
+  };
+
+  const supportResponse = {
+    tickets: [{ id: 'SUP-1023', subject: 'Status do pedido #548712', status: 'Respondido', updatedAt: '2024-06-20' }]
   };
 
   beforeEach(() => {
@@ -49,22 +60,6 @@ describe('AccountService', () => {
 
   afterEach(() => {
     httpMock.verify();
-  });
-
-  it('should expose a complete customer journey from the API', (done) => {
-    service.getJourney().subscribe((journey) => {
-      expect(journey.profile.name).toBeTruthy();
-      expect(journey.overview.benefits.length).toBeGreaterThan(0);
-      expect(journey.addresses.some((a) => a.default)).toBeTrue();
-      expect(journey.paymentMethods.length).toBeGreaterThan(0);
-      expect(journey.supportTickets.length).toBeGreaterThan(0);
-      done();
-    });
-
-    const req = httpMock.expectOne(
-      `${environment.apiBaseUrl}/user-service/account/journey/${DEFAULT_ACCOUNT_USER_ID}`
-    );
-    req.flush({ journey: journeyResponse });
   });
 
   it('should fetch each slice independently with dedicated endpoints', (done) => {
@@ -90,9 +85,24 @@ describe('AccountService', () => {
       done();
     });
 
-    const req = httpMock.expectOne(
-      `${environment.apiBaseUrl}/user-service/account/journey/${DEFAULT_ACCOUNT_USER_ID}`
-    );
-    req.flush({ journey: journeyResponse });
+    httpMock
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/overview/${DEFAULT_ACCOUNT_USER_ID}`)
+      .flush(overviewResponse);
+
+    httpMock
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/profile/${DEFAULT_ACCOUNT_USER_ID}`)
+      .flush(profileResponse);
+
+    httpMock
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/addresses/${DEFAULT_ACCOUNT_USER_ID}`)
+      .flush(addressesResponse);
+
+    httpMock
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/payments/${DEFAULT_ACCOUNT_USER_ID}`)
+      .flush(paymentsResponse);
+
+    httpMock
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/support/${DEFAULT_ACCOUNT_USER_ID}`)
+      .flush(supportResponse);
   });
 });
