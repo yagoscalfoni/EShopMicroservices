@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AccountService, DEFAULT_ACCOUNT_USER_ID } from './account.service';
+import { AccountService } from './account.service';
 import { environment } from '../../../environments/environment';
+import { AuthService } from './auth.service';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -52,8 +53,15 @@ describe('AccountService', () => {
     tickets: [{ id: 'SUP-1023', subject: 'Status do pedido #548712', status: 'Respondido', updatedAt: '2024-06-20' }]
   };
 
+  const authServiceStub = {
+    userId: 'user-123'
+  } satisfies Partial<AuthService>;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [HttpClientTestingModule] });
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: AuthService, useValue: authServiceStub }]
+    });
     service = TestBed.inject(AccountService);
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -86,23 +94,23 @@ describe('AccountService', () => {
     });
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/overview/${DEFAULT_ACCOUNT_USER_ID}`)
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/overview/${authServiceStub.userId}`)
       .flush(overviewResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/profile/${DEFAULT_ACCOUNT_USER_ID}`)
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/profile/${authServiceStub.userId}`)
       .flush(profileResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/addresses/${DEFAULT_ACCOUNT_USER_ID}`)
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/addresses/${authServiceStub.userId}`)
       .flush(addressesResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/payments/${DEFAULT_ACCOUNT_USER_ID}`)
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/payments/${authServiceStub.userId}`)
       .flush(paymentsResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/support/${DEFAULT_ACCOUNT_USER_ID}`)
+      .expectOne(`${environment.apiBaseUrl}/user-service/account/support/${authServiceStub.userId}`)
       .flush(supportResponse);
   });
 });
