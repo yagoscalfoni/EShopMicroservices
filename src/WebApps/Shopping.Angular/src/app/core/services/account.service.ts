@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AccountOverview, AddressSummary, PaymentMethod, ProfileDetails, SupportTicket } from '../models/account.model';
-
-export const DEFAULT_ACCOUNT_USER_ID = 'd1f8a1a7-b7b5-4d47-a799-df891f8bb123';
+import { AuthService } from './auth.service';
 
 interface AccountOverviewResponse {
   overview: AccountOverview;
@@ -29,9 +28,20 @@ interface SupportTicketsResponse {
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   private readonly baseUrl = environment.apiBaseUrl;
-  private readonly userId = DEFAULT_ACCOUNT_USER_ID;
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly authService: AuthService
+  ) {}
+
+  private get userId(): string {
+    const userId = this.authService.userId;
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
+
+    return userId;
+  }
 
   getOverview(): Observable<AccountOverview> {
     return this.http

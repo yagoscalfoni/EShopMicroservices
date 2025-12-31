@@ -42,6 +42,10 @@ export class AuthService {
     return !!this.token;
   }
 
+  get userId(): string | null {
+    return this.currentUserSubject.value?.userId ?? null;
+  }
+
   private persistUser(user: AuthenticatedUser): void {
     localStorage.setItem(this.storageKey, JSON.stringify(user));
     this.currentUserSubject.next(user);
