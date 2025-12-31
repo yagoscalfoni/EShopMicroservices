@@ -7,7 +7,7 @@
   >
     <div class="d-flex align-items-start gap-2">
       <div class="flex-grow-1">
-        <strong class="d-block text-capitalize">{{ toast.type }}</strong>
+        <strong class="d-block text-capitalize">{{ titleFor(toast.type) }}</strong>
         <span>{{ toast.message }}</span>
       </div>
       <button type="button" class="btn-close btn-close-white" aria-label="Fechar" (click)="dismiss(toast.id)"></button>

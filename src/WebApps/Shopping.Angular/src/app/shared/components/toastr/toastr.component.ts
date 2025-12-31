@@ -14,6 +14,19 @@ export class ToastrComponent {
 
   constructor(private readonly toastrService: ToastrService) {}
 
+  titleFor(type: ToastrMessage['type']): string {
+    switch (type) {
+      case 'danger':
+        return 'Erro';
+      case 'info':
+        return 'Info';
+      case 'warning':
+        return 'Atenção';
+      default:
+        return type;
+    }
+  }
+
   dismiss(id: number): void {
     this.toastrService.dismiss(id);
   }
