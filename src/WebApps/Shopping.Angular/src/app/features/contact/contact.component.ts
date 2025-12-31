@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ToastrService } from '../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-contact',
@@ -17,16 +18,18 @@ export class ContactComponent {
     message: ['', Validators.required]
   });
 
-  submitted = false;
-
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly toastrService: ToastrService
+  ) {}
 
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.toastrService.showWarning('Preencha nome, email e mensagem para enviar o contato.');
       return;
     }
 
-    this.submitted = true;
+    this.toastrService.showInfo('Mensagem enviada com sucesso!');
   }
 }

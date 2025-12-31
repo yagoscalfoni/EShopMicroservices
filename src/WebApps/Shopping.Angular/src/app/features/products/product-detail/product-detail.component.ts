@@ -6,6 +6,7 @@ import { Product } from '../../../core/models/product.model';
 import { BasketService } from '../../../core/services/basket.service';
 import { CatalogService } from '../../../core/services/catalog.service';
 import { productImageUrl } from '../../../core/utils/image-url';
+import { ToastrService } from '../../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,22 +23,32 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private readonly catalogService: CatalogService,
     private readonly basketService: BasketService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.catalogService.getProduct(id).subscribe((response) => (this.product = response.product));
+      this.catalogService.getProduct(id).subscribe({
+        next: (response) => (this.product = response.product),
+        error: () => this.toastrService.showDanger('Não foi possível carregar o produto selecionado.')
+      });
+    } else {
+      this.toastrService.showWarning('Produto não encontrado.');
     }
   }
 
   addToCart(): void {
     if (!this.product) {
+      this.toastrService.showWarning('Selecione um produto válido antes de adicionar ao carrinho.');
       return;
     }
 
-    this.basketService.addItem(this.product, this.quantity).subscribe();
+    this.basketService.addItem(this.product, this.quantity).subscribe({
+      next: () => this.toastrService.showInfo(`${this.product?.name} adicionado ao carrinho.`),
+      error: () => this.toastrService.showDanger('Não foi possível adicionar o produto ao carrinho.')
+    });
   }
 
   get productImageUrl(): string {

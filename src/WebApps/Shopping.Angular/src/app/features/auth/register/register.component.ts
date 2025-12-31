@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ToastrService } from '../../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-register',
@@ -12,8 +13,6 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  message = '';
-
   readonly form = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -24,12 +23,14 @@ export class RegisterComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly toastrService: ToastrService
   ) {}
 
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.toastrService.showWarning('Preencha todos os campos obrigatórios.');
       return;
     }
 
@@ -37,10 +38,10 @@ export class RegisterComponent {
       .register(this.form.value as any)
       .subscribe({
         next: () => {
-          this.message = 'Conta criada com sucesso!';
+          this.toastrService.showInfo('Conta criada com sucesso!');
           this.router.navigate(['/login']);
         },
-        error: () => (this.message = 'Não foi possível registrar. Tente novamente.')
+        error: () => this.toastrService.showDanger('Não foi possível registrar. Tente novamente.')
       });
   }
 }

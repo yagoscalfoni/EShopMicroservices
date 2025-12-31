@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { EMPTY, Subject, catchError, exhaustMap, takeUntil, tap } from 'rxjs';
 import { BasketCheckout } from '../../core/models/basket.model';
 import { BasketService } from '../../core/services/basket.service';
+import { ToastrService } from '../../shared/services/toastr.service';
 
 @Component({
   selector: 'app-checkout',
@@ -15,7 +16,6 @@ import { BasketService } from '../../core/services/basket.service';
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
   submitting = false;
-  message = '';
 
   // Usamos um Subject para orquestrar envios da mesma forma que um fluxo de eventos.
   // Isso nos permite aplicar operadores como exhaustMap e centralizar o tratamento de resposta.
@@ -37,7 +37,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     paymentMethod: [1, Validators.required]
   });
 
-  constructor(private readonly fb: FormBuilder, private readonly basketService: BasketService) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly basketService: BasketService,
+    private readonly toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.checkoutForm.patchValue({ country: 'US', state: 'WA', paymentMethod: 1 });
@@ -48,16 +52,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         // prevenindo disparos duplicados e aproveitando o estado "submitting" como trava.
         exhaustMap((checkout) => {
           this.submitting = true;
-          this.message = '';
 
           return this.basketService.checkoutBasket(checkout).pipe(
             tap({
               next: () => {
-                this.message = 'Pedido enviado com sucesso!';
+                this.toastrService.showInfo('Pedido enviado com sucesso!');
                 this.submitting = false;
               },
               error: () => {
-                this.message = 'Falha ao finalizar o pedido. Tente novamente.';
+                this.toastrService.showDanger('Falha ao finalizar o pedido. Tente novamente.');
                 this.submitting = false;
               }
             }),
@@ -73,6 +76,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   submit(): void {
     if (this.checkoutForm.invalid) {
       this.checkoutForm.markAllAsTouched();
+      this.toastrService.showWarning('Preencha os dados de pagamento e entrega para finalizar o pedido.');
       return;
     }
 
