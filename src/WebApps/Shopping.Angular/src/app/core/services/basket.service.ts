@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, shareReplay, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, shareReplay, switchMap, take, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   BasketCheckout,
@@ -69,6 +69,7 @@ export class BasketService {
 
   addItem(product: Product, quantity: number = 1): Observable<ShoppingCart> {
     return this.getBasket().pipe(
+      take(1),
       // switchMap garante que utilizamos sempre a versão mais recente do carrinho
       // e evita empilhar inscrições caso o usuário clique repetidamente em "adicionar".
       switchMap((cart) => {
@@ -93,6 +94,7 @@ export class BasketService {
 
   removeItem(productId: string): Observable<ShoppingCart> {
     return this.getBasket().pipe(
+      take(1),
       // switchMap impede condições de corrida quando várias remoções acontecem
       // rapidamente, usando sempre o carrinho mais atualizado disponível.
       switchMap((cart) => {
