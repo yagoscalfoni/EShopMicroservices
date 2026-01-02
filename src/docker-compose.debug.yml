@@ -15,7 +15,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_catalog:/var/lib/postgresql/data/ 
+      - postgres_catalog:/var/lib/postgresql/data/
+    networks:
+      - monitoring_network
 
   basketdb:
     container_name: basketdb
@@ -44,10 +46,10 @@ services:
       - PROMETHEUS_QUERY_NORMALIZE_CALLS=true
       - PROMETHEUS_QUERY_NORMALIZE_DURATION=true
     ports:
-      - "16686:16686"  # UI do Jaeger
-      - "6831:6831/udp"  # Porta de coleta do Jaeger
-      - "4317:4317"  # Porta do OTLP gRPC para o Jaeger
-      - "8888:8888" 
+      - "16686:16686"
+      - "6831:6831/udp"
+      - "4317:4317"
+      - "8888:8888"
     networks:
       - monitoring_network
 
@@ -232,7 +234,6 @@ services:
       - "6064:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
     networks:
       - monitoring_network
 
