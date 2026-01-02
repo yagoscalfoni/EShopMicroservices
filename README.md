@@ -72,5 +72,12 @@ Authentication and user management are handled via the **Identity microservice**
 ```bash
 git clone https://github.com/yagoscalfoni/EShopMicroservices.git
 cd EShopMicroservices
-docker-compose up --build
+
+# Ambiente de debug/local (compose + sobreposição de debug)
+docker compose -f src/docker-compose.yml -f src/docker-compose.debug.yml up --build
+
+# Ambiente de produção (variáveis vindas do Key Vault para o .env.production)
+docker compose -f src/docker-compose.yml -f src/docker-compose.prod.yml --env-file .env.production up -d
 ```
+
+> Consulte `docs/keyvault-setup.md` para entender como popular o `.env.production` a partir do Azure Key Vault de forma segura e automatizada.
