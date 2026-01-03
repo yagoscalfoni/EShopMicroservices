@@ -62,6 +62,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// Alimentar através de flag alterar nas variáveis de ambiente do container
+if (builder.Configuration.GetValue<bool>("Catalog:SeedData"))
+{
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+}
+
+
 // Configurar o pipeline de requisies HTTP.
 app.MapCarter();
 
