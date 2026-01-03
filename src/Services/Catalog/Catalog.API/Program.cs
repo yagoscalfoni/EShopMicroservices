@@ -61,12 +61,10 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Swagger na URL base
     });
 }
-
+Console.WriteLine(typeof(Product).AssemblyQualifiedName);
 // Alimentar através de flag alterar nas variáveis de ambiente do container
 if (app.Configuration.GetValue<bool>("Catalog:SeedData"))
 {
-    Console.WriteLine(typeof(Product).AssemblyQualifiedName);
-
     using var scope = app.Services.CreateScope();
     var store = scope.ServiceProvider.GetRequiredService<IDocumentStore>();
 
