@@ -65,6 +65,8 @@ if (app.Environment.IsDevelopment())
 // Alimentar através de flag alterar nas variáveis de ambiente do container
 if (app.Configuration.GetValue<bool>("Catalog:SeedData"))
 {
+    Console.WriteLine(typeof(Product).AssemblyQualifiedName);
+
     using var scope = app.Services.CreateScope();
     var store = scope.ServiceProvider.GetRequiredService<IDocumentStore>();
 
