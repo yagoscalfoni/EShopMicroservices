@@ -1,6 +1,6 @@
 # 🛒 EShopMicroservices
 
-A fully modular, cloud-native **e-commerce backend** application built with **.NET 8**, implementing real-world microservices architecture using best practices such as **DDD**, **CQRS**, **Clean Architecture**, **JWT Authentication**, and asynchronous messaging with **RabbitMQ**.
+A fully modular, cloud-native **e-commerce backend** application built with **.NET 8**, implementing real-world microservices architecture using best practices such as **DDD**, **CQRS**, **Clean Architecture**, **JWT Authentication**, and asynchronous messaging with **Azure Service Bus**.
 
 ---
 
@@ -21,7 +21,7 @@ It provides a solid foundation for any enterprise-level distributed system with 
 - ✅ **JWT-based Authentication** via Identity microservice
 - ✅ **API Gateway** using YARP Reverse Proxy
 - ✅ **Sync Communication** with **gRPC**
-- ✅ **Async Communication** with **RabbitMQ + MassTransit**
+- ✅ **Async Communication** with **Azure Service Bus + MassTransit**
 - ✅ **Docker & Docker Compose** for containerized orchestration
 - ✅ **Health Checks**, **OpenTelemetry**, and observability practices
 
@@ -39,7 +39,7 @@ Authentication and user management are handled via the **Identity microservice**
 |---------------------------|-------------------------------------------------------------------------------|
 | **Framework**             | .NET 8, ASP.NET Core Minimal APIs, Razor Pages, C# 12                        |
 | **API Gateway**           | YARP (Yet Another Reverse Proxy)                                             |
-| **Messaging**             | RabbitMQ + MassTransit                                                       |
+| **Messaging**             | Azure Service Bus + MassTransit                                             |
 | **Sync Communication**    | gRPC                                                                         |
 | **Databases**             | PostgreSQL, Redis, SQLite, SQL Server, Marten (Document DB on PostgreSQL)    |
 | **Libraries**             | MediatR, Mapster, Carter, Refit, FluentValidation, EF Core                   |

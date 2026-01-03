@@ -8,7 +8,7 @@ Este repositório agora diferencia arquivos de orquestração para cenários de 
    ```bash
    az keyvault create -g <resource-group> -n <key-vault-name>
    az keyvault secret set --vault-name <key-vault-name> --name catalog-db-connection-string --value "Server=<host>;Port=5432;Database=CatalogDb;User Id=<user>;Password=<pwd>;Ssl Mode=Require"
-   az keyvault secret set --vault-name <key-vault-name> --name messagebroker-password --value "<strong-password>"
+   az keyvault secret set --vault-name <key-vault-name> --name messagebroker-connection-string --value "Endpoint=sb://<namespace>.servicebus.windows.net/;SharedAccessKeyName=<policy>;SharedAccessKey=<key>"
    # Repita para cada secret referenciada em `docker-compose.prod.yml`.
    ```
 
@@ -38,9 +38,7 @@ Este repositório agora diferencia arquivos de orquestração para cenários de 
    USER_DB_PASSWORD=$(az keyvault secret show --vault-name $KEY_VAULT --name user-db-password --query value -o tsv)
    ORDER_DB_PASSWORD=$(az keyvault secret show --vault-name $KEY_VAULT --name order-db-password --query value -o tsv)
 
-   MESSAGEBROKER_HOST=amqp://ecommerce-mq:5672
-   MESSAGEBROKER_USERNAME=$(az keyvault secret show --vault-name $KEY_VAULT --name messagebroker-username --query value -o tsv)
-   MESSAGEBROKER_PASSWORD=$(az keyvault secret show --vault-name $KEY_VAULT --name messagebroker-password --query value -o tsv)
+   MESSAGEBROKER_CONNECTION_STRING=$(az keyvault secret show --vault-name $KEY_VAULT --name messagebroker-connection-string --query value -o tsv)
 
    DISCOUNT_GRPC_URL=https://discount.grpc:8081
    GATEWAY_BASE_URI=http://yarpapigateway:8080
