@@ -63,11 +63,14 @@ if (app.Environment.IsDevelopment())
 }
 
 // Alimentar através de flag alterar nas variáveis de ambiente do container
-if (builder.Configuration.GetValue<bool>("Catalog:SeedData"))
+if (app.Configuration.GetValue<bool>("Catalog:SeedData"))
 {
-    builder.Services.InitializeMartenWith<CatalogInitialData>();
-}
+    using var scope = app.Services.CreateScope();
+    var store = scope.ServiceProvider.GetRequiredService<IDocumentStore>();
 
+    var seeder = new CatalogInitialData();
+    await seeder.Populate(store, CancellationToken.None);
+}
 
 // Configurar o pipeline de requisies HTTP.
 app.MapCarter();
