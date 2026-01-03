@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AccountService } from './account.service';
-import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
+import { API_BASE_URL } from '../config/api.config';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -94,23 +94,23 @@ describe('AccountService', () => {
     });
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/overview/${authServiceStub.userId}`)
+      .expectOne(`${API_BASE_URL}/user-service/account/overview/${authServiceStub.userId}`)
       .flush(overviewResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/profile/${authServiceStub.userId}`)
+      .expectOne(`${API_BASE_URL}/user-service/account/profile/${authServiceStub.userId}`)
       .flush(profileResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/addresses/${authServiceStub.userId}`)
+      .expectOne(`${API_BASE_URL}/user-service/account/addresses/${authServiceStub.userId}`)
       .flush(addressesResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/payments/${authServiceStub.userId}`)
+      .expectOne(`${API_BASE_URL}/user-service/account/payments/${authServiceStub.userId}`)
       .flush(paymentsResponse);
 
     httpMock
-      .expectOne(`${environment.apiBaseUrl}/user-service/account/support/${authServiceStub.userId}`)
+      .expectOne(`${API_BASE_URL}/user-service/account/support/${authServiceStub.userId}`)
       .flush(supportResponse);
   });
 });

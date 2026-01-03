@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { environment } from '../../../environments/environment';
+import { API_BASE_URL } from '../config/api.config';
 import { BasketService } from './basket.service';
 import { ShoppingCart, ShoppingCartItem } from '../models/basket.model';
 import { Product } from '../models/product.model';
@@ -8,7 +8,7 @@ import { Product } from '../models/product.model';
 describe('BasketService', () => {
   let service: BasketService;
   let httpMock: HttpTestingController;
-  const baseUrl = environment.apiBaseUrl;
+  const baseUrl = API_BASE_URL;
 
   const sampleItem: ShoppingCartItem = {
     productId: 'p1',

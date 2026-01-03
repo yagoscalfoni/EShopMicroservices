@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { API_BASE_URL } from '../config/api.config';
 import { AccountOverview, AddressSummary, PaymentMethod, ProfileDetails, SupportTicket } from '../models/account.model';
 import { AuthService } from './auth.service';
 
@@ -27,7 +27,7 @@ interface SupportTicketsResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-  private readonly baseUrl = environment.apiBaseUrl;
+  private readonly baseUrl = API_BASE_URL;
 
   constructor(
     private readonly http: HttpClient,

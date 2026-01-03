@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { API_BASE_URL } from '../config/api.config';
 import {
   AuthenticateUserRequest,
   AuthenticateUserResponse,
@@ -12,7 +12,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly baseUrl = environment.apiBaseUrl;
+  private readonly baseUrl = API_BASE_URL;
   private readonly storageKey = 'shopping-user';
   private readonly currentUserSubject = new BehaviorSubject<AuthenticatedUser | null>(this.loadUser());
   readonly currentUser$ = this.currentUserSubject.asObservable();

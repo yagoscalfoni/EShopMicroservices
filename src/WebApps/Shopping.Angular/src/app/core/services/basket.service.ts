@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, shareReplay, switchMap, take, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { API_BASE_URL } from '../config/api.config';
 import {
   BasketCheckout,
   CheckoutBasketRequest,
@@ -16,7 +16,7 @@ import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class BasketService {
-  private readonly baseUrl = environment.apiBaseUrl;
+  private readonly baseUrl = API_BASE_URL;
   private readonly defaultUser = 'swn';
 
   // Usamos um gatilho reativo para controlar quando a cesta deve ser carregada novamente
