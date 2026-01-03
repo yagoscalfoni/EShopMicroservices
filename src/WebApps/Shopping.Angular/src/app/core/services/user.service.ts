@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { API_BASE_URL } from '../config/api.config';
 import { CreateUserRequest, UpdateUserRequest, User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private readonly baseUrl = `${environment.apiBaseUrl}/user-service`;
+  private readonly baseUrl = `${API_BASE_URL}/user-service`;
 
   constructor(private readonly http: HttpClient) {}
 

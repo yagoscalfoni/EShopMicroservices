@@ -1,13 +1,13 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { environment } from '../../../environments/environment';
+import { API_BASE_URL } from '../config/api.config';
 import { AuthService } from './auth.service';
 import { AuthenticateUserRequest, AuthenticatedUser } from '../models/auth.model';
 
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
-  const baseUrl = environment.apiBaseUrl;
+  const baseUrl = API_BASE_URL;
   const storageKey = 'shopping-user';
 
   beforeEach(() => {
