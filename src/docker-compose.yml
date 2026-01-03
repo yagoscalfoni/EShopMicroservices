@@ -71,11 +71,6 @@ services:
     networks:
       - monitoring_network
 
-  messagebroker:
-    image: rabbitmq:management
-    networks:
-      - monitoring_network
-
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:

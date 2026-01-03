@@ -16,13 +16,8 @@ public static class Extentions
             if (assembly != null)
                 config.AddConsumers(assembly);
 
-            config.UsingRabbitMq((context, configurator) =>
+            config.UsingAzureServiceBus(configuration["MessageBroker:ConnectionString"]!, (context, configurator) =>
             {
-                configurator.Host(new Uri(configuration["MessageBroker:Host"]!), host =>
-                {
-                    host.Username(configuration["MessageBroker:UserName"]);
-                    host.Password(configuration["MessageBroker:Password"]);
-                });
                 configurator.ConfigureEndpoints(context);
             });
         });

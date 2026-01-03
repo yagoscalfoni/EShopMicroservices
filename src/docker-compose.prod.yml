@@ -54,16 +54,6 @@ services:
     networks:
       - monitoring_network
 
-  messagebroker:
-    container_name: messagebroker
-    hostname: ecommerce-mq
-    environment:
-      - RABBITMQ_DEFAULT_USER=${MESSAGEBROKER_USERNAME}
-      - RABBITMQ_DEFAULT_PASS=${MESSAGEBROKER_PASSWORD}
-    restart: always
-    networks:
-      - monitoring_network
-
   catalog.api:
     environment:
       <<: *keyvault_placeholders
@@ -79,14 +69,11 @@ services:
       ConnectionStrings__Database: ${BASKET_DB_CONNECTION_STRING}
       ConnectionStrings__Redis: distributedcache:6379
       GrpcSettings__DiscountUrl: ${DISCOUNT_GRPC_URL}
-      MessageBroker__Host: ${MESSAGEBROKER_HOST}
-      MessageBroker__UserName: ${MESSAGEBROKER_USERNAME}
-      MessageBroker__Password: ${MESSAGEBROKER_PASSWORD}
+      MessageBroker__ConnectionString: ${MESSAGEBROKER_CONNECTION_STRING}
     depends_on:
       - basketdb
       - distributedcache
       - discount.grpc
-      - messagebroker
     networks:
       - monitoring_network
 
@@ -101,13 +88,10 @@ services:
     environment:
       <<: *keyvault_placeholders
       ConnectionStrings__Database: ${ORDER_DB_CONNECTION_STRING}
-      MessageBroker__Host: ${MESSAGEBROKER_HOST}
-      MessageBroker__UserName: ${MESSAGEBROKER_USERNAME}
-      MessageBroker__Password: ${MESSAGEBROKER_PASSWORD}
+      MessageBroker__ConnectionString: ${MESSAGEBROKER_CONNECTION_STRING}
       FeatureManagement__OrderFullfilment: ${FEATURE_MANAGEMENT_ORDERFULFILMENT:-false}
     depends_on:
       - orderdb
-      - messagebroker
     networks:
       - monitoring_network
 
@@ -115,12 +99,9 @@ services:
     environment:
       <<: *keyvault_placeholders
       ConnectionStrings__Database: ${USER_DB_CONNECTION_STRING}
-      MessageBroker__Host: ${MESSAGEBROKER_HOST}
-      MessageBroker__UserName: ${MESSAGEBROKER_USERNAME}
-      MessageBroker__Password: ${MESSAGEBROKER_PASSWORD}
+      MessageBroker__ConnectionString: ${MESSAGEBROKER_CONNECTION_STRING}
     depends_on:
       - userdb
-      - messagebroker
     networks:
       - monitoring_network
 
