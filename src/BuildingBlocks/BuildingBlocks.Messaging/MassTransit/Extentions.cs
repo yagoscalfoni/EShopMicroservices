@@ -16,9 +16,11 @@ public static class Extentions
             if (assembly != null)
                 config.AddConsumers(assembly);
 
-            config.UsingAzureServiceBus(configuration["MessageBroker:ConnectionString"]!, (context, configurator) =>
+            config.UsingAzureServiceBus((context, cfg) =>
             {
-                configurator.ConfigureEndpoints(context);
+                cfg.Host(configuration["MessageBroker:ConnectionString"]);
+
+                cfg.ConfigureEndpoints(context);
             });
         });
 
